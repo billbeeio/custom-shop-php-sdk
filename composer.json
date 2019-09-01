@@ -1,0 +1,44 @@
+{
+  "name": "billbee/custom-shop-api",
+  "description": "Implementation of the Billbee custom shop API in PHP",
+  "type": "library",
+  "require": {
+    "php": "5.6.* || ^7.0",
+    "psr/http-message": "^1.0",
+    "jms/serializer": "^1.14",
+    "ralouphie/getallheaders": "~3.0",
+    "mintware-de/streams": "^1.0",
+    "ext-json": "*"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^5.7",
+    "friendsofphp/php-cs-fixer": "^2.15",
+    "ext-xdebug": "*"
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Julian Finkler",
+      "email": "julian@billbee.io"
+    }
+  ],
+  "minimum-stability": "stable",
+  "autoload": {
+    "psr-4": {
+      "Billbee\\CustomShopApi\\": "src/",
+      "Billbee\\Tests\\CustomShopApi\\": "tests/"
+    }
+  },
+  "scripts": {
+    "fix-cs": [
+      "./vendor/bin/php-cs-fixer fix ./src/ --using-cache=no --rules=@PSR2",
+      "./vendor/bin/php-cs-fixer fix ./tests/ --using-cache=no --rules=@PSR2"
+    ]
+  },
+  "archive": {
+    "exclude": [
+      "/docs",
+      "/tests"
+    ]
+  }
+}
