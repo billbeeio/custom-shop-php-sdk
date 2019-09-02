@@ -7,7 +7,7 @@ $ composer install billbee/custom-shop-api
 ```
 
 ## 2. Implement the repository classes
-This package provides 3 repository classes in the `Billbee\CustomShopApi\Repository` namespace:
+This package provides 4 repository classes in the `Billbee\CustomShopApi\Repository` namespace:
 - `OrdersRepositoryInterface`
 - `ProductsRepositoryInterface`
 - `StockSyncRepositoryInterface`
