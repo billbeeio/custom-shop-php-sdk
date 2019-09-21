@@ -1,5 +1,5 @@
 # Adding security for a marketplace application
-If you offer a marketplace application, you might want that your sellers to be able to retrieve only their own data (orders, products etc.)
+If you offer a marketplace application, you might want that your sellers are able to retrieve only their own data (orders, products etc.).
 Fortunately, Billbee supports such scenarios by using the basic auth standard.
 
 To integrate this workflow into you application you can create your own `Authenticator` which implements the `AuthenticatorInterface`.
