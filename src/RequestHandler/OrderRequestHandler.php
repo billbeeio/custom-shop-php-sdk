@@ -41,7 +41,7 @@ class OrderRequestHandler extends RequestHandlerBase
             }
 
             if ($queryArgs['Action'] == 'AckOrder') {
-                return $this->ackOrder($queryArgs);
+                return $this->ackOrder($request);
             }
 
             if ($queryArgs['Action'] == 'GetOrder') {
@@ -73,9 +73,11 @@ class OrderRequestHandler extends RequestHandlerBase
         return Response::json($response);
     }
 
-    private function ackOrder($arguments)
+    private function ackOrder($request)
     {
-        if (!isset($arguments['OrderId']) || empty($orderId = trim($arguments['OrderId']))) {
+        $data = $this->deserializeBody($request);
+
+        if (!isset($data['OrderId']) || empty($orderId = trim($data['OrderId']))) {
             return Response::badRequest('Es wurde keine OrderId übergeben');
         }
 
