@@ -77,6 +77,10 @@ class OrderRequestHandler extends RequestHandlerBase
     {
         $data = $this->deserializeBody($request);
 
+        if (!$data) {
+            $data = $_POST;
+        }
+
         if (!isset($data['OrderId']) || empty($orderId = trim($data['OrderId']))) {
             return Response::badRequest('Es wurde keine OrderId übergeben');
         }
@@ -109,6 +113,10 @@ class OrderRequestHandler extends RequestHandlerBase
     private function setOrderState(RequestInterface $request)
     {
         $data = $this->deserializeBody($request);
+
+        if (!$data) {
+            $data = $_POST;
+        }
 
         if (!isset($data['OrderId']) || empty($orderId = trim($data['OrderId']))) {
             return Response::badRequest('Es wurde keine OrderId übergeben');
