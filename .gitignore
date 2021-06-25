@@ -1,3 +1,5 @@
 vendor/
 composer.lock
 client.php
+/.phpunit.result.cache
+/.idea/

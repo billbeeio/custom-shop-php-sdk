@@ -24,7 +24,8 @@ class OrderTest extends TestCase
         $order = new Order();
         $this->assertNull($order->getOrderId());
         $this->assertNull($order->getOrderNumber());
-        $this->assertNull($order->getCountryCode());
+        $this->assertNull($order->getCurrencyCode());
+        $this->assertNull($order->getDeliverySourceCountryCode());
         $this->assertNull($order->getNickName());
         $this->assertNull($order->getShipCost());
         $this->assertNull($order->getInvoiceAddress());
@@ -51,7 +52,8 @@ class OrderTest extends TestCase
 
         $order->setOrderId('1234')
               ->setOrderNumber('5678')
-              ->setCountryCode('DE')
+              ->setCurrencyCode('EUR')
+              ->setDeliverySourceCountryCode('DE')
               ->setNickName('foobar')
               ->setShipCost(3.99)
               ->setInvoiceAddress($invoiceAddress)
@@ -72,7 +74,8 @@ class OrderTest extends TestCase
 
         $this->assertEquals('1234', $order->getOrderId());
         $this->assertEquals('5678', $order->getOrderNumber());
-        $this->assertEquals('DE', $order->getCountryCode());
+        $this->assertEquals('EUR', $order->getCurrencyCode());
+        $this->assertEquals('DE', $order->getDeliverySourceCountryCode());
         $this->assertEquals('foobar', $order->getNickName());
         $this->assertEquals(3.99, $order->getShipCost());
         $this->assertSame($invoiceAddress, $order->getInvoiceAddress());

@@ -36,7 +36,14 @@ class Order
      * @Serializer\SerializedName("currency_code")
      * @Serializer\Type("string")
      */
-    public $countryCode;
+    public $currencyCode;
+
+    /**
+     * @var string
+     * @Serializer\SerializedName("delivery_source_country_code")
+     * @Serializer\Type("string")
+     */
+    public $deliverySourceCountryCode;
 
     /**
      * @var string
@@ -196,18 +203,36 @@ class Order
     /**
      * @return mixed
      */
-    public function getCountryCode()
+    public function getCurrencyCode()
     {
-        return $this->countryCode;
+        return $this->currencyCode;
     }
 
     /**
-     * @param mixed $countryCode
+     * @param mixed $currencyCode
      * @return Order
      */
-    public function setCountryCode($countryCode)
+    public function setCurrencyCode($currencyCode)
     {
-        $this->countryCode = $countryCode;
+        $this->currencyCode = $currencyCode;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDeliverySourceCountryCode()
+    {
+        return $this->deliverySourceCountryCode;
+    }
+
+    /**
+     * @param string $deliverySourceCountryCode
+     * @return Order
+     */
+    public function setDeliverySourceCountryCode($deliverySourceCountryCode)
+    {
+        $this->deliverySourceCountryCode = $deliverySourceCountryCode;
         return $this;
     }
 
