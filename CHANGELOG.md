@@ -1,6 +1,6 @@
 # Changelog
 
-## v2.0.0
+## v2.0.0 (25. Jun 2021)
 
 Added:
 - `Order::$deliverySourceCountryCode`.
