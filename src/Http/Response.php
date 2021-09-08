@@ -12,6 +12,8 @@
 
 namespace Billbee\CustomShopApi\Http;
 
+use JMS\Serializer\Handler\DateHandler;
+use JMS\Serializer\Handler\HandlerRegistryInterface;
 use JMS\Serializer\SerializerBuilder;
 use MintWare\Streams\MemoryStream;
 use Psr\Http\Message\ResponseInterface;
@@ -51,7 +53,19 @@ class Response extends Message implements ResponseInterface
         $headers = [],
         $protocolVersion = '1.1'
     ) {
-        $serializer = SerializerBuilder::create()->build();
+        $builder = SerializerBuilder::create();
+
+        if (class_exists('\JMS\Serializer\Visitor\Factory\JsonSerializationVisitorFactory')) {
+            $factory = new \JMS\Serializer\Visitor\Factory\JsonSerializationVisitorFactory();
+            $factory->setOptions(0);
+            $builder = $builder->setSerializationVisitor('json', $factory);
+
+        }
+        $serializer = $builder
+            ->configureHandlers(function (HandlerRegistryInterface $handlerRegistry) {
+                $handlerRegistry->registerSubscribingHandler(new DateHandler(\DateTime::ISO8601));
+            })
+            ->build();
         $json = $serializer->serialize($data, 'json');
         $headers['content-type'] = ['application/json'];
         return new Response($json, $statusCode, $reasonPhrase, $headers, $protocolVersion);
