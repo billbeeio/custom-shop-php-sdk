@@ -3,3 +3,4 @@ composer.lock
 client.php
 /.phpunit.result.cache
 /.idea/
+/.php_cs.cache
