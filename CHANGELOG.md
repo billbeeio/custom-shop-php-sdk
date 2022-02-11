@@ -1,5 +1,10 @@
 # Changelog
 
+## v2.1.0 (11. Feb 2022)
+
+Updated:
+- Version constraints for PHP and jms/serializer updated
+
 ## v2.0.0 (25. Jun 2021)
 
 Added:
