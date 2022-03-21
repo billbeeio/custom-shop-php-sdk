@@ -25,6 +25,7 @@ use DateTime;
 use Exception;
 use MintWare\Streams\MemoryStream;
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\RequestInterface;
 
 class OrderRequestHandlerTest extends TestCase
 {
@@ -61,8 +62,8 @@ class OrderRequestHandlerTest extends TestCase
         $this->assertEquals(1, $data['paging']['page']);
         $this->assertEquals(1, $data['paging']['totalPages']);
         $this->assertEquals(1, $data['paging']['totalCount']);
-        $body = '{"paging":{"page":1,"totalCount":1,"totalPages":1},"orders":[{"order_id":"1234","order_number":"456","currency_code":"EUR","delivery_source_country_code":"DE","nick_name":"GirlWhoCanFly","ship_cost":4.9,"invoice_address":{"firstname":"Kara","lastname":"Zor-El","street":"Argo Street","housenumber":"1022","address2":"Window","postcode":"90012","city":"National City","country_code":"US","company":"D.E.O.","state":"CA"},"delivery_address":{"firstname":"Kara","lastname":"Zor-El","street":"Argo Street","housenumber":"1022","address2":"Window","postcode":"90012","city":"National City","country_code":"US","company":"D.E.O.","state":"CA"},"order_date":"2019-01-01T20:00:15+00:00","email":"secret@deo.tld","phone1":"0123456789","pay_date":"2019-01-01T23:00:15+00:00","ship_date":"2019-01-02T02:00:15+00:00","payment_method":1,"order_status_id":2,"seller_comment":"Psst","shippingprofile_id":"super-fast","vat_id":"DE-123456","payment_transaction_id":"123444"}]}';
-        $this->assertEquals($body, $response->getBody());
+        $body = '{"paging":{"page":1,"totalCount":1,"totalPages":1},"orders":[{"order_id":"1234","order_number":"456","currency_code":"EUR","delivery_source_country_code":"DE","nick_name":"GirlWhoCanFly","ship_cost":4.9,"invoice_address":{"firstname":"Kara","lastname":"Zor-El","street":"Argo Street","housenumber":"1022","address2":"Window","postcode":"90012","city":"National City","country_code":"US","company":"D.E.O.","state":"CA"},"delivery_address":{"firstname":"Kara","lastname":"Zor-El","street":"Argo Street","housenumber":"1022","address2":"Window","postcode":"90012","city":"National City","country_code":"US","company":"D.E.O.","state":"CA"},"order_date":"2019-01-01T20:00:15+0000","email":"secret@deo.tld","phone1":"0123456789","pay_date":"2019-01-01T23:00:15+0000","ship_date":"2019-01-02T02:00:15+0000","payment_method":1,"order_status_id":2,"seller_comment":"Psst","shippingprofile_id":"super-fast","vat_id":"DE-123456","payment_transaction_id":"123444"}]}';
+        $this->assertEquals($body, (string)$response->getBody());
     }
 
     public function testGetOrdersFailsInvalidDAte()
@@ -103,6 +104,7 @@ class OrderRequestHandlerTest extends TestCase
              ->willThrowException(new OrderNotFoundException());
         $handler = new OrderRequestHandler($repo);
 
+        /** @var RequestInterface $request */
         $request = new Request();
         $uri = new Uri('http://localhost/?Action=AckOrder');
         $req = $request->withUri($uri)
@@ -121,6 +123,7 @@ class OrderRequestHandlerTest extends TestCase
              ->willThrowException(new Exception('Unknown Error'));
         $handler = new OrderRequestHandler($repo);
 
+        /** @var RequestInterface $request */
         $request = new Request();
         $uri = new Uri('http://localhost/?Action=AckOrder&OrderId=1');
         $req = $request->withUri($uri)
@@ -140,6 +143,7 @@ class OrderRequestHandlerTest extends TestCase
              ->willReturn(null);
         $handler = new OrderRequestHandler($repo);
 
+        /** @var RequestInterface $request */
         $request = new Request();
         $uri = new Uri('http://localhost/?Action=AckOrder&OrderId=1');
         $req = $request->withUri($uri)
@@ -215,7 +219,7 @@ class OrderRequestHandlerTest extends TestCase
         $response = $handler->handle($req, ['Action' => 'GetOrder', 'OrderId' => '1']);
 
         $this->assertEquals(200, $response->getStatusCode());
-        $bodyJson = '{"order_id":"1234","order_number":"456","currency_code":"EUR","delivery_source_country_code":"DE","nick_name":"GirlWhoCanFly","ship_cost":4.9,"invoice_address":{"firstname":"Kara","lastname":"Zor-El","street":"Argo Street","housenumber":"1022","address2":"Window","postcode":"90012","city":"National City","country_code":"US","company":"D.E.O.","state":"CA"},"delivery_address":{"firstname":"Kara","lastname":"Zor-El","street":"Argo Street","housenumber":"1022","address2":"Window","postcode":"90012","city":"National City","country_code":"US","company":"D.E.O.","state":"CA"},"order_date":"2019-01-01T20:00:15+00:00","email":"secret@deo.tld","phone1":"0123456789","pay_date":"2019-01-01T23:00:15+00:00","ship_date":"2019-01-02T02:00:15+00:00","payment_method":1,"order_status_id":2,"seller_comment":"Psst","shippingprofile_id":"super-fast","vat_id":"DE-123456","payment_transaction_id":"123444"}';
+        $bodyJson = '{"order_id":"1234","order_number":"456","currency_code":"EUR","delivery_source_country_code":"DE","nick_name":"GirlWhoCanFly","ship_cost":4.9,"invoice_address":{"firstname":"Kara","lastname":"Zor-El","street":"Argo Street","housenumber":"1022","address2":"Window","postcode":"90012","city":"National City","country_code":"US","company":"D.E.O.","state":"CA"},"delivery_address":{"firstname":"Kara","lastname":"Zor-El","street":"Argo Street","housenumber":"1022","address2":"Window","postcode":"90012","city":"National City","country_code":"US","company":"D.E.O.","state":"CA"},"order_date":"2019-01-01T20:00:15+0000","email":"secret@deo.tld","phone1":"0123456789","pay_date":"2019-01-01T23:00:15+0000","ship_date":"2019-01-02T02:00:15+0000","payment_method":1,"order_status_id":2,"seller_comment":"Psst","shippingprofile_id":"super-fast","vat_id":"DE-123456","payment_transaction_id":"123444"}';
         $this->assertEquals($bodyJson, (string)$response->getBody());
     }
 
@@ -239,6 +243,7 @@ class OrderRequestHandlerTest extends TestCase
         $repo = $this->createMock(OrdersRepositoryInterface::class);
         $handler = new OrderRequestHandler($repo);
 
+        /** @var RequestInterface $request */
         $request = new Request();
         $uri = new Uri('http://localhost/?Action=SetOrderState');
         $req = $request->withUri($uri)->withBody(new MemoryStream(http_build_query(['OrderId' => '1'])));
@@ -256,6 +261,7 @@ class OrderRequestHandlerTest extends TestCase
              ->willThrowException(new OrderNotFoundException());
         $handler = new OrderRequestHandler($repo);
 
+        /** @var RequestInterface $request */
         $request = new Request();
         $uri = new Uri('http://localhost/?Action=SetOrderState');
         $req = $request->withUri($uri)->withBody(new MemoryStream(http_build_query(['OrderId' => 1, 'NewStateTypeId' => 1])));
@@ -273,6 +279,7 @@ class OrderRequestHandlerTest extends TestCase
              ->willThrowException(new Exception('Unknown Error'));
         $handler = new OrderRequestHandler($repo);
 
+        /** @var RequestInterface $request */
         $request = new Request();
         $uri = new Uri('http://localhost/?Action=SetOrderState');
         $req = $request->withUri($uri)->withBody(new MemoryStream(http_build_query(['OrderId' => 1, 'NewStateTypeId' => 1])));
@@ -290,6 +297,7 @@ class OrderRequestHandlerTest extends TestCase
              ->willReturn(true);
         $handler = new OrderRequestHandler($repo);
 
+        /** @var RequestInterface $request */
         $request = new Request();
         $uri = new Uri('http://localhost/?Action=SetOrderState');
         $req = $request->withUri($uri)->withBody(new MemoryStream(http_build_query(['OrderId' => 1, 'NewStateTypeId' => 1])));
