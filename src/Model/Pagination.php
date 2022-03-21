@@ -2,7 +2,7 @@
 /**
  * This file is part of the Billbee Custom Shop API package.
  *
- * Copyright 2019 by Billbee GmbH
+ * Copyright 2019-2022 by Billbee GmbH
  *
  * For the full copyright and license information, please read the LICENSE
  * file that was distributed with this source code.
@@ -20,48 +20,57 @@ class Pagination
      * @Serializer\SerializedName("page")
      * @Serializer\Type("int")
      */
-    public $page;
+    public int $page = 1;
 
     /**
      * @Serializer\SerializedName("totalCount")
      * @Serializer\Type("int")
      */
-    public $totalCount;
+    public int $totalCount = 0;
 
     /**
      * @Serializer\SerializedName("totalPages")
      * @Serializer\Type("int")
      */
-    public $totalPages;
+    public int $totalPages = 0;
 
-    public function __construct($page = 1, $pageSize = 100, $totalCount = 0)
+    public function __construct(int $page = 1, int $pageSize = 100, int $totalCount = 0)
     {
         $this->page = $page;
-        $this->totalPages = ceil($totalCount / $pageSize);
+        $this->totalPages = (int)ceil($totalCount / $pageSize);
         $this->totalCount = $totalCount;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getPage()
+    public function getPage(): int
     {
         return $this->page;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getTotalCount()
+    public function setPage(int $page): Pagination
+    {
+        $this->page = $page;
+        return $this;
+    }
+
+    public function getTotalCount(): int
     {
         return $this->totalCount;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getTotalPages()
+    public function setTotalCount(int $totalCount): Pagination
+    {
+        $this->totalCount = $totalCount;
+        return $this;
+    }
+
+    public function getTotalPages(): int
     {
         return $this->totalPages;
+    }
+
+    public function setTotalPages(int $totalPages): Pagination
+    {
+        $this->totalPages = $totalPages;
+        return $this;
     }
 }

@@ -2,7 +2,7 @@
 /**
  * This file is part of the Billbee Custom Shop API package.
  *
- * Copyright 2019 by Billbee GmbH
+ * Copyright 2019-2022 by Billbee GmbH
  *
  * For the full copyright and license information, please read the LICENSE
  * file that was distributed with this source code.
@@ -29,5 +29,5 @@ interface StockSyncRepositoryInterface extends RepositoryInterface
      * @throws ProductNotFoundException If the product does not exist
      * @throws Exception If something went wrong
      */
-    public function setStock($productId, $quantity);
+    public function setStock(string $productId, float $quantity): void;
 }

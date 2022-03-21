@@ -2,7 +2,7 @@
 /**
  * This file is part of the Billbee Custom Shop API package.
  *
- * Copyright 2019 by Billbee GmbH
+ * Copyright 2019-2022 by Billbee GmbH
  *
  * For the full copyright and license information, please read the LICENSE
  * file that was distributed with this source code.
@@ -28,7 +28,7 @@ use Psr\Http\Message\ResponseInterface;
 
 class RequestHandlerPoolTest extends TestCase
 {
-    public function testConstructorSimple()
+    public function testConstructorSimple(): void
     {
         $orderRepoMock = $this->createMock(OrdersRepositoryInterface::class);
         $rhp = new RequestHandlerPool(null, [$orderRepoMock]);
@@ -39,7 +39,7 @@ class RequestHandlerPoolTest extends TestCase
         $this->assertNull($rhp->getAuthenticator());
     }
 
-    public function testConstructorAdvanced()
+    public function testConstructorAdvanced(): void
     {
         $authMock = $this->createMock(AuthenticatorInterface::class);
         $orderRepoMock = $this->createMock(OrdersRepositoryInterface::class);
@@ -56,11 +56,11 @@ class RequestHandlerPoolTest extends TestCase
         $this->assertEquals($authMock, $rhp->getAuthenticator());
     }
 
-    public function testHandleFailsUnauthorized()
+    public function testHandleFailsUnauthorized(): void
     {
         $authMock = $this->createMock(AuthenticatorInterface::class);
         $authMock->method('isAuthorized')
-                 ->willReturn(false);
+            ->willReturn(false);
 
         $orderRepoMock = $this->createMock(OrdersRepositoryInterface::class);
         $rhp = new RequestHandlerPool($authMock, [$orderRepoMock]);
@@ -73,11 +73,11 @@ class RequestHandlerPoolTest extends TestCase
         $this->assertEquals('Unautorisiert', (string)$response->getBody());
     }
 
-    public function testHandleFailsNoAction()
+    public function testHandleFailsNoAction(): void
     {
         $authMock = $this->createMock(AuthenticatorInterface::class);
         $authMock->method('isAuthorized')
-                 ->willReturn(true);
+            ->willReturn(true);
 
         $orderRepoMock = $this->createMock(OrdersRepositoryInterface::class);
         $rhp = new RequestHandlerPool($authMock, [$orderRepoMock]);
@@ -90,11 +90,11 @@ class RequestHandlerPoolTest extends TestCase
         $this->assertEquals('Keine Aktion übergeben.', (string)$response->getBody());
     }
 
-    public function testHandleFailsNotImplementedAction()
+    public function testHandleFailsNotImplementedAction(): void
     {
         $authMock = $this->createMock(AuthenticatorInterface::class);
         $authMock->method('isAuthorized')
-                 ->willReturn(true);
+            ->willReturn(true);
 
         $orderRepoMock = $this->createMock(OrdersRepositoryInterface::class);
         $rhp = new RequestHandlerPool($authMock, [$orderRepoMock]);
@@ -107,15 +107,15 @@ class RequestHandlerPoolTest extends TestCase
         $this->assertEquals('Diese Aktion ist nicht implementiert.', (string)$response->getBody());
     }
 
-    public function testHandle()
+    public function testHandle(): void
     {
         $authMock = $this->createMock(AuthenticatorInterface::class);
         $authMock->method('isAuthorized')
-                 ->willReturn(true);
+            ->willReturn(true);
 
         $orderRepoMock = $this->createMock(OrdersRepositoryInterface::class);
         $orderRepoMock->method('getOrder')
-                      ->willReturn(new Order());
+            ->willReturn(new Order());
 
         $rhp = new RequestHandlerPool($authMock, [$orderRepoMock]);
 

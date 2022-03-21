@@ -2,7 +2,7 @@
 /**
  * This file is part of the Billbee Custom Shop API package.
  *
- * Copyright 2019 by Billbee GmbH
+ * Copyright 2019-2022 by Billbee GmbH
  *
  * For the full copyright and license information, please read the LICENSE
  * file that was distributed with this source code.
@@ -14,20 +14,22 @@ namespace Billbee\CustomShopApi\Model;
 
 use RuntimeException;
 
+/**
+ * @phpstan-template T
+ */
 class PagedData
 {
-    /** @var array */
-    protected $data;
+    /** @var T[]  */
+    protected array $data;
 
-    /** @var int */
-    protected $totalCount;
+    protected int $totalCount;
 
     /**
      * PagedData constructor.
-     * @param array $data
+     * @param T[] $data
      * @param int $totalCount
      */
-    public function __construct(array $data = [], $totalCount = 0)
+    public function __construct(array $data = [], int $totalCount = 0)
     {
         $this->data = $data;
         $this->totalCount = $totalCount;
@@ -38,17 +40,14 @@ class PagedData
     }
 
     /**
-     * @return array
+     * @return T[]
      */
-    public function getData()
+    public function getData(): array
     {
         return $this->data;
     }
 
-    /**
-     * @return int
-     */
-    public function getTotalCount()
+    public function getTotalCount(): int
     {
         return $this->totalCount;
     }

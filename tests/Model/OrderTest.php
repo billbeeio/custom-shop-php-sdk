@@ -2,7 +2,7 @@
 /**
  * This file is part of the Billbee Custom Shop API package.
  *
- * Copyright 2019 by Billbee GmbH
+ * Copyright 2019-2022 by Billbee GmbH
  *
  * For the full copyright and license information, please read the LICENSE
  * file that was distributed with this source code.
@@ -19,7 +19,7 @@ use PHPUnit\Framework\TestCase;
 
 class OrderTest extends TestCase
 {
-    public function testGettersSetters()
+    public function testGettersSetters(): void
     {
         $order = new Order();
         $this->assertNull($order->getOrderId());
@@ -51,26 +51,26 @@ class OrderTest extends TestCase
         $shipDate = new DateTime();
 
         $order->setOrderId('1234')
-              ->setOrderNumber('5678')
-              ->setCurrencyCode('EUR')
-              ->setDeliverySourceCountryCode('DE')
-              ->setNickName('foobar')
-              ->setShipCost(3.99)
-              ->setInvoiceAddress($invoiceAddress)
-              ->setDeliveryAddress($deliveryAddress)
-              ->setOrderDate($orderDate)
-              ->setEmail('hello@world.tld')
-              ->setPhone1('PHONE 12345')
-              ->setPayDate($payDate)
-              ->setShipDate($shipDate)
-              ->setPaymentMethod(2)
-              ->setStatusId(1)
-              ->setItems([])
-              ->setComments([])
-              ->setSellerComment('Seller Comment')
-              ->setShippingProfileId('FLATRATE')
-              ->setVatId('DE1234')
-              ->setPaymentTransactionId('PAY-1234');
+            ->setOrderNumber('5678')
+            ->setCurrencyCode('EUR')
+            ->setDeliverySourceCountryCode('DE')
+            ->setNickName('foobar')
+            ->setShipCost(3.99)
+            ->setInvoiceAddress($invoiceAddress)
+            ->setDeliveryAddress($deliveryAddress)
+            ->setOrderDate($orderDate)
+            ->setEmail('hello@world.tld')
+            ->setPhone1('PHONE 12345')
+            ->setPayDate($payDate)
+            ->setShipDate($shipDate)
+            ->setPaymentMethod(2)
+            ->setStatusId(1)
+            ->setItems([])
+            ->setComments([])
+            ->setSellerComment('Seller Comment')
+            ->setShippingProfileId('FLATRATE')
+            ->setVatId('DE1234')
+            ->setPaymentTransactionId('PAY-1234');
 
         $this->assertEquals('1234', $order->getOrderId());
         $this->assertEquals('5678', $order->getOrderNumber());

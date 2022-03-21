@@ -2,7 +2,7 @@
 /**
  * This file is part of the Billbee Custom Shop API package.
  *
- * Copyright 2019 by Billbee GmbH
+ * Copyright 2019-2022 by Billbee GmbH
  *
  * For the full copyright and license information, please read the LICENSE
  * file that was distributed with this source code.
@@ -22,7 +22,7 @@ use RuntimeException;
 
 class ShippingProfileRequestHandlerTest extends TestCase
 {
-    public function testConstructor()
+    public function testConstructor(): void
     {
         $repo = $this->createMock(ShippingProfileRepositoryInterface::class);
 
@@ -33,20 +33,20 @@ class ShippingProfileRequestHandlerTest extends TestCase
         $this->assertTrue($handler->canHandle($request, ['Action' => 'GetShippingProfiles']));
     }
 
-    public function testHandleNonExistent()
+    public function testHandleNonExistent(): void
     {
         $repo = $this->createMock(ShippingProfileRepositoryInterface::class);
 
         $handler = new ShippingProfileRequestHandler($repo);
         $response = $handler->handle(new Request(), ['Action' => 'asdf']);
-        $this->assertNull($response);
+        $this->assertEquals(400, $response->getStatusCode());
     }
 
-    public function testSetStockFailsException()
+    public function testSetStockFailsException(): void
     {
         $repo = $this->createMock(ShippingProfileRepositoryInterface::class);
         $repo->method('getShippingProfiles')
-             ->willThrowException(new RuntimeException("Unknown Error"));
+            ->willThrowException(new RuntimeException("Unknown Error"));
 
         $handler = new ShippingProfileRequestHandler($repo);
         $request = new Request();
@@ -56,15 +56,16 @@ class ShippingProfileRequestHandlerTest extends TestCase
         $this->assertEquals('Internal Server Error', $response->getReasonPhrase());
         $this->assertEquals('Unknown Error', (string)$response->getBody());
     }
-    public function testHandle()
+
+    public function testHandle(): void
     {
         $repo = $this->createMock(ShippingProfileRepositoryInterface::class);
 
         $repo->method('getShippingProfiles')
-             ->willReturn([
-                 new ShippingProfile('1', 'Profile 1'),
-                 new ShippingProfile('2', 'Profile 2')
-             ]);
+            ->willReturn([
+                new ShippingProfile('1', 'Profile 1'),
+                new ShippingProfile('2', 'Profile 2')
+            ]);
 
         $handler = new ShippingProfileRequestHandler($repo);
         $response = $handler->handle(new Request(), ['Action' => 'GetShippingProfiles']);

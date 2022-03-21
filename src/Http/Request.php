@@ -2,7 +2,7 @@
 /**
  * This file is part of the Billbee Custom Shop API package.
  *
- * Copyright 2019 by Billbee GmbH
+ * Copyright 2019-2022 by Billbee GmbH
  *
  * For the full copyright and license information, please read the LICENSE
  * file that was distributed with this source code.
@@ -17,19 +17,18 @@ use MintWare\Streams\InputStream;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\UriInterface;
 
-/** @inheritDoc */
+/**
+ * @extends Message<Request>
+ */
 class Request extends Message implements RequestInterface
 {
-    /** @var string */
-    private $requestTarget;
+    private string $requestTarget = '';
 
-    /** @var string */
-    private $method;
+    private string $method = 'GET';
 
-    /** @var UriInterface */
-    private $uri;
+    private UriInterface $uri;
 
-    public static function createFromGlobals()
+    public static function createFromGlobals(): Request
     {
         $request = new Request();
 
@@ -62,12 +61,15 @@ class Request extends Message implements RequestInterface
     }
 
     /** @inheritDoc */
-    public function getRequestTarget()
+    public function getRequestTarget(): string
     {
         return $this->requestTarget;
     }
 
-    /** @inheritDoc */
+    /**
+     * @inheritDoc
+     * @param string $requestTarget
+     */
     public function withRequestTarget($requestTarget)
     {
         $request = clone $this;
@@ -78,7 +80,7 @@ class Request extends Message implements RequestInterface
     }
 
     /** @inheritDoc */
-    public function getMethod()
+    public function getMethod(): string
     {
         return $this->method;
     }
@@ -94,7 +96,7 @@ class Request extends Message implements RequestInterface
     }
 
     /** @inheritDoc */
-    public function getUri()
+    public function getUri(): UriInterface
     {
         return $this->uri;
     }

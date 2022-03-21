@@ -2,7 +2,7 @@
 /**
  * This file is part of the Billbee Custom Shop API package.
  *
- * Copyright 2019 by Billbee GmbH
+ * Copyright 2019-2022 by Billbee GmbH
  *
  * For the full copyright and license information, please read the LICENSE
  * file that was distributed with this source code.
@@ -30,7 +30,7 @@ interface OrdersRepositoryInterface extends RepositoryInterface
      * @throws NotImplementedException If the method is not implemented
      * @throws OrderNotFoundException If the order wasn't found
      */
-    public function getOrder($orderId);
+    public function getOrder(string $orderId): Order;
 
     /**
      * Should return the orders which are created or modified since the $modifiedSince parameter.
@@ -38,9 +38,9 @@ interface OrdersRepositoryInterface extends RepositoryInterface
      * @param int $page The page, 1 is the first page.
      * @param int $pageSize The number of orders per page
      * @param DateTime $modifiedSince The date from which the orders should be returned.
-     * @return PagedData A PagedData object which holds the found orders
+     * @return PagedData<Order> A PagedData object which holds the found orders
      */
-    public function getOrders($page, $pageSize, DateTime $modifiedSince);
+    public function getOrders(int $page, int $pageSize, DateTime $modifiedSince): PagedData;
 
     /**
      * Billbee calls this method to acknowledge that the order was received
@@ -52,19 +52,19 @@ interface OrdersRepositoryInterface extends RepositoryInterface
      * @throws OrderNotFoundException If the order was not found
      * @throws Exception If something went wrong
      */
-    public function acknowledgeOrder($orderId);
+    public function acknowledgeOrder(string $orderId);
 
     /**
      * Sets the state of an order
      *
      * @param string $orderId The id of the order
      * @param int $newStateId The new state id of the order
-     * @param string $comment A comment
+     * @param ?string $comment A comment
      * @return void
      *
      * @throws NotImplementedException If the method is not implemented
      * @throws OrderNotFoundException If the order was not found
      * @throws Exception If something went wrong
      */
-    public function setOrderState($orderId, $newStateId, $comment);
+    public function setOrderState(string $orderId, int $newStateId, ?string $comment);
 }

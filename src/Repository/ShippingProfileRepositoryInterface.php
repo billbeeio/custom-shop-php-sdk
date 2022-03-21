@@ -2,7 +2,7 @@
 /**
  * This file is part of the Billbee Custom Shop API package.
  *
- * Copyright 2019 by Billbee GmbH
+ * Copyright 2019-2022 by Billbee GmbH
  *
  * For the full copyright and license information, please read the LICENSE
  * file that was distributed with this source code.
@@ -21,8 +21,7 @@ interface ShippingProfileRepositoryInterface extends RepositoryInterface
      * Return all available shipping profiles
      *
      * @return ShippingProfile[] The shipping profiles
-     *
      * @throws NotImplementedException If the method is not implemented
      */
-    public function getShippingProfiles();
+    public function getShippingProfiles(): array;
 }

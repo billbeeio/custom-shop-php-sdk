@@ -2,7 +2,7 @@
 /**
  * This file is part of the Billbee Custom Shop API package.
  *
- * Copyright 2019 by Billbee GmbH
+ * Copyright 2019-2022 by Billbee GmbH
  *
  * For the full copyright and license information, please read the LICENSE
  * file that was distributed with this source code.
@@ -27,20 +27,18 @@ use Psr\Http\Message\RequestInterface;
 
 class RequestHandlerPool
 {
-    /** @var AuthenticatorInterface */
-    private $authenticator;
+    private ?AuthenticatorInterface $authenticator;
 
     /** @var RequestHandlerInterface[] */
-    private $requestHandlers = [];
+    private array $requestHandlers = [];
 
     /**
      * RequestHandlerPool constructor.
-     * @param AuthenticatorInterface $authenticator
      * @param RepositoryInterface[] $repositories The repositories
      */
     public function __construct(
-        $authenticator,
-        $repositories = []
+        ?AuthenticatorInterface $authenticator,
+        array $repositories = []
     ) {
         AnnotationRegistry::registerLoader('class_exists');
 
@@ -65,7 +63,7 @@ class RequestHandlerPool
         }
     }
 
-    public function handle(RequestInterface $request)
+    public function handle(RequestInterface $request): Response
     {
         parse_str($request->getUri()->getQuery(), $arguments);
 
@@ -86,10 +84,7 @@ class RequestHandlerPool
         return Response::badRequest('Diese Aktion ist nicht implementiert.');
     }
 
-    /**
-     * @return AuthenticatorInterface
-     */
-    public function getAuthenticator()
+    public function getAuthenticator(): ?AuthenticatorInterface
     {
         return $this->authenticator;
     }
@@ -97,7 +92,7 @@ class RequestHandlerPool
     /**
      * @return RequestHandlerInterface[]
      */
-    public function getRequestHandlers()
+    public function getRequestHandlers(): array
     {
         return $this->requestHandlers;
     }

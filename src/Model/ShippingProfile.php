@@ -2,7 +2,7 @@
 /**
  * This file is part of the Billbee Custom Shop API package.
  *
- * Copyright 2019 by Billbee GmbH
+ * Copyright 2019-2022 by Billbee GmbH
  *
  * For the full copyright and license information, please read the LICENSE
  * file that was distributed with this source code.
@@ -17,56 +17,40 @@ use JMS\Serializer\Annotation as Serializer;
 class ShippingProfile
 {
     /**
-     * @var string
      * @Serializer\SerializedName("Id")
      * @Serializer\Type("string")
      */
-    public $id;
+    public ?string $id = null;
 
     /**
-     * @var string
      * @Serializer\SerializedName("Name")
      * @Serializer\Type("string")
      */
-    public $name;
+    public ?string $name = null;
 
-    public function __construct($id = null, $name = null)
+    public function __construct(?string $id = null, ?string $name = null)
     {
         $this->id = $id;
         $this->name = $name;
     }
 
-    /**
-     * @return string
-     */
-    public function getId()
+    public function getId(): ?string
     {
         return $this->id;
     }
 
-    /**
-     * @param string $id
-     * @return ShippingProfile
-     */
-    public function setId($id)
+    public function setId(?string $id): ShippingProfile
     {
         $this->id = $id;
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    /**
-     * @param string $name
-     * @return ShippingProfile
-     */
-    public function setName($name)
+    public function setName(?string $name): ShippingProfile
     {
         $this->name = $name;
         return $this;

@@ -2,7 +2,7 @@
 /**
  * This file is part of the Billbee Custom Shop API package.
  *
- * Copyright 2019 by Billbee GmbH
+ * Copyright 2019-2022 by Billbee GmbH
  *
  * For the full copyright and license information, please read the LICENSE
  * file that was distributed with this source code.
@@ -14,41 +14,38 @@ namespace Billbee\CustomShopApi\Http;
 
 use Psr\Http\Message\UriInterface;
 
-/** @inheritDoc */
 class Uri implements UriInterface
 {
-    /** @var string */
-    protected $uri;
+    /** @var array<int|string, bool|int|string> */
+    protected array $uri;
+    protected string $scheme = '';
+    protected string $authority = '';
+    protected string $userInfo = '';
+    protected string $host = '';
+    protected ?int $port = null;
+    protected string $path = '';
+    protected string $query = '';
+    protected string $fragment = '';
 
-    protected $scheme;
-    protected $authority;
-    protected $userInfo;
-    protected $host;
-    protected $port;
-    protected $path;
-    protected $query;
-    protected $fragment;
-
-    /** @inheritDoc */
-    public function __construct($url)
+    public function __construct(string $url)
     {
-        $this->uri = parse_url($url);
-        $this->scheme = isset($this->uri['scheme']) ? $this->uri['scheme'] : null;
-        $this->host = isset($this->uri['host']) ? $this->uri['host'] : null;
-        $this->port = isset($this->uri['port']) ? $this->uri['port'] : null;
-        $this->path = isset($this->uri['path']) ? $this->uri['path'] : null;
-        $this->query = isset($this->uri['query']) ? $this->uri['query'] : null;
-        $this->fragment = isset($this->uri['fragment']) ? $this->uri['fragment'] : null;
+        $this->uri = (array)parse_url($url);
+        $this->scheme = $this->uri['scheme'] ?? '';
+        $this->host = $this->uri['host'] ?? '';
+        $this->port = $this->uri['port'] ?? null;
+        $this->path = $this->uri['path'] ?? '';
+        $this->query = $this->uri['query'] ?? '';
+        $this->fragment = $this->uri['fragment'] ?? '';
 
 
         $this->userInfo = implode(':', array_filter([
-            isset($this->uri['user']) ? $this->uri['user'] : '',
-            isset($this->uri['pass']) ? $this->uri['pass'] : ''
+            $this->uri['user'] ?? '',
+            $this->uri['pass'] ?? ''
         ]));
 
         $this->authority = !empty(trim($this->userInfo)) ? $this->userInfo . '@' : '';
         $this->authority .= $this->host;
-        $this->authority .= !empty(trim($this->port)) && $this->port != 80 ? ':' . $this->port : '';
+        $this->authority .= $this->port != null && !empty(trim((string)$this->port)) && $this->port != 80 ? ':' . $this->port : '';
     }
 
 
@@ -59,13 +56,13 @@ class Uri implements UriInterface
     }
 
     /** @inheritDoc */
-    public function getAuthority()
+    public function getAuthority(): string
     {
         return $this->authority;
     }
 
     /** @inheritDoc */
-    public function getUserInfo()
+    public function getUserInfo(): string
     {
         return $this->userInfo;
     }

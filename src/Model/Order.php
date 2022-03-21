@@ -2,7 +2,7 @@
 /**
  * This file is part of the Billbee Custom Shop API package.
  *
- * Copyright 2019 by Billbee GmbH
+ * Copyright 2019-2022 by Billbee GmbH
  *
  * For the full copyright and license information, please read the LICENSE
  * file that was distributed with this source code.
@@ -12,531 +12,379 @@
 
 namespace Billbee\CustomShopApi\Model;
 
-use DateTime;
+use DateTimeInterface;
 use JMS\Serializer\Annotation as Serializer;
 
 class Order
 {
     /**
-     * @var string
      * @Serializer\SerializedName("order_id")
      * @Serializer\Type("string")
      */
-    public $orderId;
+    public ?string $orderId = null;
 
     /**
-     * @var string
      * @Serializer\SerializedName("order_number")
      * @Serializer\Type("string")
      */
-    public $orderNumber;
+    public ?string $orderNumber = null;
 
     /**
-     * @var string
      * @Serializer\SerializedName("currency_code")
      * @Serializer\Type("string")
      */
-    public $currencyCode;
+    public ?string $currencyCode = null;
 
     /**
-     * @var string
      * @Serializer\SerializedName("delivery_source_country_code")
      * @Serializer\Type("string")
      */
-    public $deliverySourceCountryCode;
+    public ?string $deliverySourceCountryCode = null;
 
     /**
-     * @var string
      * @Serializer\SerializedName("nick_name")
      * @Serializer\Type("string")
      */
-    public $nickName;
+    public ?string $nickName = null;
 
     /**
-     * @var float
      * @Serializer\SerializedName("ship_cost")
      * @Serializer\Type("float")
      */
-    public $shipCost;
+    public ?float $shipCost = null;
 
     /**
-     * @var Address
      * @Serializer\SerializedName("invoice_address")
      * @Serializer\Type("Billbee\CustomShopApi\Model\Address")
      */
-    public $invoiceAddress;
+    public ?Address $invoiceAddress = null;
 
     /**
-     * @var Address
      * @Serializer\SerializedName("delivery_address")
      * @Serializer\Type("Billbee\CustomShopApi\Model\Address")
      */
-    public $deliveryAddress;
+    public ?Address $deliveryAddress = null;
 
     /**
-     * @var DateTime
      * @Serializer\SerializedName("order_date")
      * @Serializer\Type("DateTime")
      */
-    public $orderDate;
+    public ?DateTimeInterface $orderDate = null;
 
     /**
-     * @var string
      * @Serializer\SerializedName("email")
      * @Serializer\Type("string")
      */
-    public $email;
+    public ?string $email = null;
 
     /**
-     * @var string
      * @Serializer\SerializedName("phone1")
      * @Serializer\Type("string")
      */
-    public $phone1;
+    public ?string $phone1 = null;
 
     /**
-     * @var DateTime
      * @Serializer\SerializedName("pay_date")
      * @Serializer\Type("DateTime")
      */
-    public $payDate;
+    public ?DateTimeInterface $payDate = null;
 
     /**
-     * @var DateTime
      * @Serializer\SerializedName("ship_date")
      * @Serializer\Type("DateTime")
      */
-    public $shipDate;
+    public ?DateTimeInterface $shipDate = null;
 
     /**
-     * @var int
      * @Serializer\SerializedName("payment_method")
      * @Serializer\Type("int")
      */
-    public $paymentMethod;
+    public ?int $paymentMethod = null;
 
     /**
-     * @var int
      * @Serializer\SerializedName("order_status_id")
      * @Serializer\Type("int")
      */
-    public $statusId;
+    public ?int $statusId = null;
 
     /**
-     * @var OrderProduct[]
+     * @var ?OrderProduct[]
      * @Serializer\SerializedName("order_products")
      * @Serializer\Type("array<Billbee\CustomShopApi\Model\OrderProduct>")
      */
-    public $items;
+    public ?array $items = null;
 
     /**
-     * @var OrderComment[]
+     * @var ?OrderComment[]
      * @Serializer\SerializedName("order_history")
      * @Serializer\Type("array<Billbee\CustomShopApi\Model\OrderComment>")
      */
-    public $comments;
+    public ?array $comments = null;
 
     /**
-     * @var string
      * @Serializer\SerializedName("seller_comment")
      * @Serializer\Type("string")
      */
-    public $sellerComment;
+    public ?string $sellerComment = null;
 
     /**
-     * @var string
      * @Serializer\SerializedName("shippingprofile_id")
      * @Serializer\Type("string")
      */
-    public $shippingProfileId;
+    public ?string $shippingProfileId = null;
 
     /**
-     * @var string
      * @Serializer\SerializedName("vat_id")
      * @Serializer\Type("string")
      */
-    public $vatId;
+    public ?string $vatId = null;
 
     /**
-     * @var string
      * @Serializer\SerializedName("payment_transaction_id")
      * @Serializer\Type("string")
      */
-    public $paymentTransactionId;
+    public ?string $paymentTransactionId = null;
 
-    /**
-     * @return mixed
-     */
-    public function getOrderId()
+    public function getOrderId(): ?string
     {
         return $this->orderId;
     }
 
-    /**
-     * @param mixed $orderId
-     * @return Order
-     */
-    public function setOrderId($orderId)
+    public function setOrderId(?string $orderId): Order
     {
         $this->orderId = $orderId;
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getOrderNumber()
+    public function getOrderNumber(): ?string
     {
         return $this->orderNumber;
     }
 
-    /**
-     * @param mixed $orderNumber
-     * @return Order
-     */
-    public function setOrderNumber($orderNumber)
+    public function setOrderNumber(?string $orderNumber): Order
     {
         $this->orderNumber = $orderNumber;
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getCurrencyCode()
+    public function getCurrencyCode(): ?string
     {
         return $this->currencyCode;
     }
 
-    /**
-     * @param mixed $currencyCode
-     * @return Order
-     */
-    public function setCurrencyCode($currencyCode)
+    public function setCurrencyCode(?string $currencyCode): Order
     {
         $this->currencyCode = $currencyCode;
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getDeliverySourceCountryCode()
+    public function getDeliverySourceCountryCode(): ?string
     {
         return $this->deliverySourceCountryCode;
     }
 
-    /**
-     * @param string $deliverySourceCountryCode
-     * @return Order
-     */
-    public function setDeliverySourceCountryCode($deliverySourceCountryCode)
+    public function setDeliverySourceCountryCode(?string $deliverySourceCountryCode): Order
     {
         $this->deliverySourceCountryCode = $deliverySourceCountryCode;
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getNickName()
+    public function getNickName(): ?string
     {
         return $this->nickName;
     }
 
-    /**
-     * @param mixed $nickName
-     * @return Order
-     */
-    public function setNickName($nickName)
+    public function setNickName(?string $nickName): Order
     {
         $this->nickName = $nickName;
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getShipCost()
+    public function getShipCost(): ?float
     {
         return $this->shipCost;
     }
 
-    /**
-     * @param mixed $shipCost
-     * @return Order
-     */
-    public function setShipCost($shipCost)
+    public function setShipCost(?float $shipCost): Order
     {
         $this->shipCost = $shipCost;
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getInvoiceAddress()
+    public function getInvoiceAddress(): ?Address
     {
         return $this->invoiceAddress;
     }
 
-    /**
-     * @param mixed $invoiceAddress
-     * @return Order
-     */
-    public function setInvoiceAddress($invoiceAddress)
+    public function setInvoiceAddress(?Address $invoiceAddress): Order
     {
         $this->invoiceAddress = $invoiceAddress;
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getDeliveryAddress()
+    public function getDeliveryAddress(): ?Address
     {
         return $this->deliveryAddress;
     }
 
-    /**
-     * @param mixed $deliveryAddress
-     * @return Order
-     */
-    public function setDeliveryAddress($deliveryAddress)
+    public function setDeliveryAddress(?Address $deliveryAddress): Order
     {
         $this->deliveryAddress = $deliveryAddress;
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getOrderDate()
+    public function getOrderDate(): ?DateTimeInterface
     {
         return $this->orderDate;
     }
 
-    /**
-     * @param mixed $orderDate
-     * @return Order
-     */
-    public function setOrderDate($orderDate)
+    public function setOrderDate(?DateTimeInterface $orderDate): Order
     {
         $this->orderDate = $orderDate;
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getEmail()
+    public function getEmail(): ?string
     {
         return $this->email;
     }
 
-    /**
-     * @param mixed $email
-     * @return Order
-     */
-    public function setEmail($email)
+    public function setEmail(?string $email): Order
     {
         $this->email = $email;
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getPhone1()
+    public function getPhone1(): ?string
     {
         return $this->phone1;
     }
 
-    /**
-     * @param mixed $phone1
-     * @return Order
-     */
-    public function setPhone1($phone1)
+    public function setPhone1(?string $phone1): Order
     {
         $this->phone1 = $phone1;
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getPayDate()
+    public function getPayDate(): ?DateTimeInterface
     {
         return $this->payDate;
     }
 
-    /**
-     * @param mixed $payDate
-     * @return Order
-     */
-    public function setPayDate($payDate)
+    public function setPayDate(?DateTimeInterface $payDate): Order
     {
         $this->payDate = $payDate;
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getShipDate()
+    public function getShipDate(): ?DateTimeInterface
     {
         return $this->shipDate;
     }
 
-    /**
-     * @param mixed $shipDate
-     * @return Order
-     */
-    public function setShipDate($shipDate)
+    public function setShipDate(?DateTimeInterface $shipDate): Order
     {
         $this->shipDate = $shipDate;
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getPaymentMethod()
+    public function getPaymentMethod(): ?int
     {
         return $this->paymentMethod;
     }
 
-    /**
-     * @param mixed $paymentMethod
-     * @return Order
-     */
-    public function setPaymentMethod($paymentMethod)
+    public function setPaymentMethod(?int $paymentMethod): Order
     {
         $this->paymentMethod = $paymentMethod;
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getStatusId()
+    public function getStatusId(): ?int
     {
         return $this->statusId;
     }
 
-    /**
-     * @param mixed $statusId
-     * @return Order
-     */
-    public function setStatusId($statusId)
+    public function setStatusId(?int $statusId): Order
     {
         $this->statusId = $statusId;
         return $this;
     }
 
     /**
-     * @return mixed
+     * @return ?OrderProduct[]
      */
-    public function getItems()
+    public function getItems(): ?array
     {
         return $this->items;
     }
 
     /**
-     * @param mixed $items
+     * @param ?OrderProduct[] $items
      * @return Order
      */
-    public function setItems($items)
+    public function setItems(?array $items): Order
     {
         $this->items = $items;
         return $this;
     }
 
     /**
-     * @return mixed
+     * @return ?OrderComment[]
      */
-    public function getComments()
+    public function getComments(): ?array
     {
         return $this->comments;
     }
 
     /**
-     * @param mixed $comments
+     * @param ?OrderComment[] $comments
      * @return Order
      */
-    public function setComments($comments)
+    public function setComments(?array $comments): Order
     {
         $this->comments = $comments;
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getSellerComment()
+    public function getSellerComment(): ?string
     {
         return $this->sellerComment;
     }
 
-    /**
-     * @param mixed $sellerComment
-     * @return Order
-     */
-    public function setSellerComment($sellerComment)
+    public function setSellerComment(?string $sellerComment): Order
     {
         $this->sellerComment = $sellerComment;
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getShippingProfileId()
+    public function getShippingProfileId(): ?string
     {
         return $this->shippingProfileId;
     }
 
-    /**
-     * @param mixed $shippingProfileId
-     * @return Order
-     */
-    public function setShippingProfileId($shippingProfileId)
+    public function setShippingProfileId(?string $shippingProfileId): Order
     {
         $this->shippingProfileId = $shippingProfileId;
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getVatId()
+    public function getVatId(): ?string
     {
         return $this->vatId;
     }
 
-    /**
-     * @param mixed $vatId
-     * @return Order
-     */
-    public function setVatId($vatId)
+    public function setVatId(?string $vatId): Order
     {
         $this->vatId = $vatId;
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getPaymentTransactionId()
+    public function getPaymentTransactionId(): ?string
     {
         return $this->paymentTransactionId;
     }
 
-    /**
-     * @param mixed $paymentTransactionId
-     * @return Order
-     */
-    public function setPaymentTransactionId($paymentTransactionId)
+    public function setPaymentTransactionId(?string $paymentTransactionId): Order
     {
         $this->paymentTransactionId = $paymentTransactionId;
         return $this;

@@ -2,7 +2,7 @@
 /**
  * This file is part of the Billbee Custom Shop API package.
  *
- * Copyright 2019 by Billbee GmbH
+ * Copyright 2019-2022 by Billbee GmbH
  *
  * For the full copyright and license information, please read the LICENSE
  * file that was distributed with this source code.
@@ -17,475 +17,338 @@ use JMS\Serializer\Annotation as Serializer;
 class Product
 {
     /**
-     * @var string
      * @Serializer\SerializedName("material")
      * @Serializer\Type("string")
      */
-    public $material;
+    public ?string $material = null;
 
     /**
-     * @var string
      * @Serializer\SerializedName("shortdescription")
      * @Serializer\Type("string")
      */
-    public $shortDescription;
+    public ?string $shortDescription = null;
 
     /**
-     * @var string
      * @Serializer\SerializedName("basic_attributes")
      * @Serializer\Type("string")
      */
-    public $basicAttributes;
+    public ?string $basicAttributes = null;
 
     /**
-     * @var string
      * @Serializer\SerializedName("description")
      * @Serializer\Type("string")
      */
-    public $description;
+    public ?string $description = null;
 
     /**
-     * @var string
      * @Serializer\SerializedName("id")
      * @Serializer\Type("string")
      */
-    public $id;
+    public ?string $id = null;
 
     /**
-     * @var ProductImage[]
+     * @var ?ProductImage[]
      * @Serializer\SerializedName("images")
      * @Serializer\Type("array<Billbee\CustomShopApi\Model\ProductImage>")
      */
-    public $images;
+    public ?array $images = null;
 
     /**
-     * @var string
      * @Serializer\SerializedName("title")
      * @Serializer\Type("string")
      */
-    public $title;
+    public ?string $title = null;
 
     /**
-     * @var float
      * @Serializer\SerializedName("price")
      * @Serializer\Type("float")
      */
-    public $price;
+    public ?float $price = null;
 
     /**
-     * @var float
      * @Serializer\SerializedName("quantity")
      * @Serializer\Type("float")
      */
-    public $quantity;
+    public ?float $quantity = null;
 
     /**
-     * @var string
      * @Serializer\SerializedName("sku")
      * @Serializer\Type("string")
      */
-    public $sku;
+    public ?string $sku = null;
 
     /**
-     * @var string
      * @Serializer\SerializedName("ean")
      * @Serializer\Type("string")
      */
-    public $ean;
+    public ?string $ean = null;
 
     /**
-     * @var string
      * @Serializer\SerializedName("manufacturer")
      * @Serializer\Type("string")
      */
-    public $manufacturer;
+    public ?string $manufacturer = null;
 
     /**
      * @var bool
      * @Serializer\SerializedName("isdigital")
      * @Serializer\Type("bool")
      */
-    public $isDigital = false;
+    public bool $isDigital = false;
 
     /**
-     * @var float
      * @Serializer\SerializedName("weight")
      * @Serializer\Type("float")
      */
-    public $weightInKg;
+    public ?float $weightInKg = null;
 
     /**
-     * @var float
      * @Serializer\SerializedName("vat_rate")
      * @Serializer\Type("float")
      */
-    public $vatRate;
+    public ?float $vatRate = null;
 
     /**
-     * @var float
      * @Serializer\SerializedName("lengthcm")
      * @Serializer\Type("float")
      */
-    public $lengthInCm;
+    public ?float $lengthInCm = null;
 
     /**
-     * @var float
      * @Serializer\SerializedName("widthcm")
      * @Serializer\Type("float")
      */
-    public $widthInCm;
+    public ?float $widthInCm = null;
 
     /**
-     * @var float
      * @Serializer\SerializedName("heightcm")
      * @Serializer\Type("float")
      */
-    public $heightInCm;
+    public ?float $heightInCm = null;
 
     /**
-     * @var array
+     * @var array<string, string>
      * @Serializer\SerializedName("customfields")
      * @Serializer\Type("array<string, string>")
      */
-    public $customFields;
+    public ?array $customFields = null;
 
-    /**
-     * @return string
-     */
-    public function getMaterial()
+    public function getMaterial(): ?string
     {
         return $this->material;
     }
 
-    /**
-     * @param string $material
-     * @return Product
-     */
-    public function setMaterial($material)
+    public function setMaterial(?string $material): Product
     {
         $this->material = $material;
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getShortDescription()
+    public function getShortDescription(): ?string
     {
         return $this->shortDescription;
     }
 
-    /**
-     * @param string $shortDescription
-     * @return Product
-     */
-    public function setShortDescription($shortDescription)
+    public function setShortDescription(?string $shortDescription): Product
     {
         $this->shortDescription = $shortDescription;
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getBasicAttributes()
+    public function getBasicAttributes(): ?string
     {
         return $this->basicAttributes;
     }
 
-    /**
-     * @param string $basicAttributes
-     * @return Product
-     */
-    public function setBasicAttributes($basicAttributes)
+    public function setBasicAttributes(?string $basicAttributes): Product
     {
         $this->basicAttributes = $basicAttributes;
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getDescription()
+    public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    /**
-     * @param string $description
-     * @return Product
-     */
-    public function setDescription($description)
+    public function setDescription(?string $description): Product
     {
         $this->description = $description;
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getId()
+    public function getId(): ?string
     {
         return $this->id;
     }
 
-    /**
-     * @param string $id
-     * @return Product
-     */
-    public function setId($id)
+    public function setId(?string $id): Product
     {
         $this->id = $id;
         return $this;
     }
 
     /**
-     * @return ProductImage[]
+     * @return ?ProductImage[]
      */
-    public function getImages()
+    public function getImages(): ?array
     {
         return $this->images;
     }
 
     /**
-     * @param ProductImage[] $images
-     * @return Product
+     * @param ?ProductImage[] $images
      */
-    public function setImages($images)
+    public function setImages(?array $images): self
     {
         $this->images = $images;
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getTitle()
+    public function getTitle(): ?string
     {
         return $this->title;
     }
 
-    /**
-     * @param string $title
-     * @return Product
-     */
-    public function setTitle($title)
+    public function setTitle(?string $title): Product
     {
         $this->title = $title;
         return $this;
     }
 
-    /**
-     * @return float
-     */
-    public function getPrice()
+    public function getPrice(): ?float
     {
         return $this->price;
     }
 
-    /**
-     * @param float $price
-     * @return Product
-     */
-    public function setPrice($price)
+    public function setPrice(?float $price): Product
     {
-        $this->price = (float)$price;
+        $this->price = $price;
         return $this;
     }
 
-    /**
-     * @return float
-     */
-    public function getQuantity()
+    public function getQuantity(): ?float
     {
         return $this->quantity;
     }
 
-    /**
-     * @param float $quantity
-     * @return Product
-     */
-    public function setQuantity($quantity)
+    public function setQuantity(?float $quantity): Product
     {
-        $this->quantity = (float)$quantity;
+        $this->quantity = $quantity;
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getSku()
+    public function getSku(): ?string
     {
         return $this->sku;
     }
 
-    /**
-     * @param string $sku
-     * @return Product
-     */
-    public function setSku($sku)
+    public function setSku(?string $sku): Product
     {
         $this->sku = $sku;
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getEan()
+    public function getEan(): ?string
     {
         return $this->ean;
     }
 
-    /**
-     * @param string $ean
-     * @return Product
-     */
-    public function setEan($ean)
+    public function setEan(?string $ean): Product
     {
         $this->ean = $ean;
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getManufacturer()
+    public function getManufacturer(): ?string
     {
         return $this->manufacturer;
     }
 
-    /**
-     * @param string $manufacturer
-     * @return Product
-     */
-    public function setManufacturer($manufacturer)
+    public function setManufacturer(?string $manufacturer): Product
     {
         $this->manufacturer = $manufacturer;
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function isDigital()
+    public function isDigital(): bool
     {
         return $this->isDigital;
     }
 
-    /**
-     * @param bool $isDigital
-     * @return Product
-     */
-    public function setIsDigital($isDigital)
+    public function setIsDigital(bool $isDigital): Product
     {
         $this->isDigital = $isDigital;
         return $this;
     }
 
-    /**
-     * @return float
-     */
-    public function getWeightInKg()
+    public function getWeightInKg(): ?float
     {
         return $this->weightInKg;
     }
 
-    /**
-     * @param float $weightInKg
-     * @return Product
-     */
-    public function setWeightInKg($weightInKg)
+    public function setWeightInKg(?float $weightInKg): Product
     {
-        $this->weightInKg = (float)$weightInKg;
+        $this->weightInKg = $weightInKg;
         return $this;
     }
 
-    /**
-     * @return float
-     */
-    public function getVatRate()
+    public function getVatRate(): ?float
     {
         return $this->vatRate;
     }
 
-    /**
-     * @param float $vatRate
-     * @return Product
-     */
-    public function setVatRate($vatRate)
+    public function setVatRate(?float $vatRate): Product
     {
-        $this->vatRate = (float)$vatRate;
+        $this->vatRate = $vatRate;
         return $this;
     }
 
-    /**
-     * @return float
-     */
-    public function getLengthInCm()
+    public function getLengthInCm(): ?float
     {
         return $this->lengthInCm;
     }
 
-    /**
-     * @param float $lengthInCm
-     * @return Product
-     */
-    public function setLengthInCm($lengthInCm)
+    public function setLengthInCm(?float $lengthInCm): Product
     {
-        $this->lengthInCm = (float)$lengthInCm;
+        $this->lengthInCm = $lengthInCm;
         return $this;
     }
 
-    /**
-     * @return float
-     */
-    public function getWidthInCm()
+    public function getWidthInCm(): ?float
     {
         return $this->widthInCm;
     }
 
-    /**
-     * @param float $widthInCm
-     * @return Product
-     */
-    public function setWidthInCm($widthInCm)
+    public function setWidthInCm(?float $widthInCm): Product
     {
-        $this->widthInCm = (float)$widthInCm;
+        $this->widthInCm = $widthInCm;
         return $this;
     }
 
-    /**
-     * @return float
-     */
-    public function getHeightInCm()
+    public function getHeightInCm(): ?float
     {
         return $this->heightInCm;
     }
 
-    /**
-     * @param float $heightInCm
-     * @return Product
-     */
-    public function setHeightInCm($heightInCm)
+    public function setHeightInCm(?float $heightInCm): Product
     {
-        $this->heightInCm = (float)$heightInCm;
+        $this->heightInCm = $heightInCm;
         return $this;
     }
 
     /**
-     * @return array
+     * @return array<string, string>
      */
-    public function getCustomFields()
+    public function getCustomFields(): ?array
     {
         return $this->customFields;
     }
 
     /**
-     * @param array $customFields
-     * @return Product
+     * @param ?array<string, string> $customFields
      */
-    public function setCustomFields($customFields)
+    public function setCustomFields(?array $customFields): Product
     {
         $this->customFields = $customFields;
         return $this;

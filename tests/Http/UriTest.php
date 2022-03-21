@@ -2,7 +2,7 @@
 /**
  * This file is part of the Billbee Custom Shop API package.
  *
- * Copyright 2019 by Billbee GmbH
+ * Copyright 2019-2022 by Billbee GmbH
  *
  * For the full copyright and license information, please read the LICENSE
  * file that was distributed with this source code.
@@ -18,7 +18,7 @@ use Psr\Http\Message\UriInterface;
 
 class UriTest extends TestCase
 {
-    public function testConstructor()
+    public function testConstructor(): void
     {
         $uri = new Uri('https://user:password@php.unit.tld:01337/file.php?param1=foo&param2=bar#fragment');
         $this->assertInstanceOf(UriInterface::class, $uri);
@@ -31,10 +31,13 @@ class UriTest extends TestCase
         $this->assertEquals('param1=foo&param2=bar', $uri->getQuery());
         $this->assertEquals('fragment', $uri->getFragment());
         $this->assertEquals('user:password@php.unit.tld:1337', $uri->getAuthority());
-        $this->assertEquals('https://user:password@php.unit.tld:1337/file.php?param1=foo&param2=bar#fragment', (string)$uri);
+        $this->assertEquals(
+            'https://user:password@php.unit.tld:1337/file.php?param1=foo&param2=bar#fragment',
+            (string)$uri
+        );
     }
 
-    public function testWithScheme()
+    public function testWithScheme(): void
     {
         $uri = new Uri('https://php.unit.tld');
         $this->assertEquals('https', $uri->getScheme());
@@ -43,7 +46,7 @@ class UriTest extends TestCase
         $this->assertEquals('http', $newUri->getScheme());
     }
 
-    public function testUserInfo()
+    public function testUserInfo(): void
     {
         $uri = new Uri('https://php.unit.tld');
         $this->assertEquals('', $uri->getUserInfo());
@@ -52,7 +55,7 @@ class UriTest extends TestCase
         $this->assertEquals('user:password', $newUri->getUserInfo());
     }
 
-    public function testWithHost()
+    public function testWithHost(): void
     {
         $uri = new Uri('https://php.unit.tld');
         $this->assertEquals('php.unit.tld', $uri->getHost());
@@ -61,16 +64,16 @@ class UriTest extends TestCase
         $this->assertEquals('another.host.tld', $newUri->getHost());
     }
 
-    public function testWithPort()
+    public function testWithPort(): void
     {
         $uri = new Uri('https://php.unit.tld');
         $this->assertEquals('', $uri->getPort());
-        $newUri = $uri->withPort('01337');
+        $newUri = $uri->withPort(1337);
         $this->assertEquals('', $uri->getPort());
         $this->assertEquals(1337, $newUri->getPort());
     }
 
-    public function testWithPath()
+    public function testWithPath(): void
     {
         $uri = new Uri('https://php.unit.tld');
         $this->assertEquals('', $uri->getPath());
@@ -79,7 +82,7 @@ class UriTest extends TestCase
         $this->assertEquals('/another.file.php', $newUri->getPath());
     }
 
-    public function testWithQuery()
+    public function testWithQuery(): void
     {
         $uri = new Uri('https://php.unit.tld');
         $this->assertEquals('', $uri->getQuery());
@@ -88,7 +91,7 @@ class UriTest extends TestCase
         $this->assertEquals('param1=foo&param2=bar', $newUri->getQuery());
     }
 
-    public function testWithFragment()
+    public function testWithFragment(): void
     {
         $uri = new Uri('https://php.unit.tld');
         $this->assertEquals('', $uri->getFragment());

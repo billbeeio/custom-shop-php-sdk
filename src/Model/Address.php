@@ -2,7 +2,7 @@
 /**
  * This file is part of the Billbee Custom Shop API package.
  *
- * Copyright 2019 by Billbee GmbH
+ * Copyright 2019-2022 by Billbee GmbH
  *
  * For the full copyright and license information, please read the LICENSE
  * file that was distributed with this source code.
@@ -20,237 +20,167 @@ class Address
      * @Serializer\SerializedName("firstname")
      * @Serializer\Type("string")
      */
-    public $firstName;
+    public ?string $firstName = null;
 
     /**
      * @Serializer\SerializedName("lastname")
      * @Serializer\Type("string")
      */
-    public $lastName;
+    public ?string $lastName = null;
 
     /**
      * @Serializer\SerializedName("street")
      * @Serializer\Type("string")
      */
-    public $street;
+    public ?string $street = null;
 
     /**
      * @Serializer\SerializedName("housenumber")
      * @Serializer\Type("string")
      */
-    public $houseNumber;
+    public ?string $houseNumber = null;
 
     /**
      * @Serializer\SerializedName("address2")
      * @Serializer\Type("string")
      */
-    public $address2;
+    public ?string $address2 = null;
 
     /**
      * @Serializer\SerializedName("postcode")
      * @Serializer\Type("string")
      */
-    public $postcode;
+    public ?string $postcode = null;
 
     /**
      * @Serializer\SerializedName("city")
      * @Serializer\Type("string")
      */
-    public $city;
+    public ?string $city = null;
 
     /**
      * @Serializer\SerializedName("country_code")
      * @Serializer\Type("string")
      */
-    public $countryCode;
+    public ?string $countryCode = null;
 
     /**
      * @Serializer\SerializedName("company")
      * @Serializer\Type("string")
      */
-    public $company;
+    public ?string $company = null;
 
     /**
      * @Serializer\SerializedName("state")
      * @Serializer\Type("string")
      */
-    public $state;
+    public ?string $state = null;
 
-    /**
-     * @return mixed
-     */
-    public function getFirstName()
+    public function getFirstName(): ?string
     {
         return $this->firstName;
     }
 
-    /**
-     * @param mixed $firstName
-     * @return Address
-     */
-    public function setFirstName($firstName)
+    public function setFirstName(?string $firstName): Address
     {
         $this->firstName = $firstName;
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getLastName()
+    public function getLastName(): ?string
     {
         return $this->lastName;
     }
 
-    /**
-     * @param mixed $lastName
-     * @return Address
-     */
-    public function setLastName($lastName)
+    public function setLastName(?string $lastName): Address
     {
         $this->lastName = $lastName;
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getStreet()
+    public function getStreet(): ?string
     {
         return $this->street;
     }
 
-    /**
-     * @param mixed $street
-     * @return Address
-     */
-    public function setStreet($street)
+    public function setStreet(?string $street): Address
     {
         $this->street = $street;
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getHouseNumber()
+    public function getHouseNumber(): ?string
     {
         return $this->houseNumber;
     }
 
-    /**
-     * @param mixed $houseNumber
-     * @return Address
-     */
-    public function setHouseNumber($houseNumber)
+    public function setHouseNumber(?string $houseNumber): Address
     {
         $this->houseNumber = $houseNumber;
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getAddress2()
+    public function getAddress2(): ?string
     {
         return $this->address2;
     }
 
-    /**
-     * @param mixed $address2
-     * @return Address
-     */
-    public function setAddress2($address2)
+    public function setAddress2(?string $address2): Address
     {
         $this->address2 = $address2;
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getPostcode()
+    public function getPostcode(): ?string
     {
         return $this->postcode;
     }
 
-    /**
-     * @param mixed $postcode
-     * @return Address
-     */
-    public function setPostcode($postcode)
+    public function setPostcode(?string $postcode): Address
     {
         $this->postcode = $postcode;
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getCity()
+    public function getCity(): ?string
     {
         return $this->city;
     }
 
-    /**
-     * @param mixed $city
-     * @return Address
-     */
-    public function setCity($city)
+    public function setCity(?string $city): Address
     {
         $this->city = $city;
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getCountryCode()
+    public function getCountryCode(): ?string
     {
         return $this->countryCode;
     }
 
-    /**
-     * @param mixed $countryCode
-     * @return Address
-     */
-    public function setCountryCode($countryCode)
+    public function setCountryCode(?string $countryCode): Address
     {
         $this->countryCode = $countryCode;
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getCompany()
+    public function getCompany(): ?string
     {
         return $this->company;
     }
 
-    /**
-     * @param mixed $company
-     * @return Address
-     */
-    public function setCompany($company)
+    public function setCompany(?string $company): Address
     {
         $this->company = $company;
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getState()
+    public function getState(): ?string
     {
         return $this->state;
     }
 
-    /**
-     * @param mixed $state
-     * @return Address
-     */
-    public function setState($state)
+    public function setState(?string $state): Address
     {
         $this->state = $state;
         return $this;

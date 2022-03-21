@@ -2,7 +2,7 @@
 /**
  * This file is part of the Billbee Custom Shop API package.
  *
- * Copyright 2019 by Billbee GmbH
+ * Copyright 2019-2022 by Billbee GmbH
  *
  * For the full copyright and license information, please read the LICENSE
  * file that was distributed with this source code.
@@ -17,7 +17,7 @@ use PHPUnit\Framework\TestCase;
 
 class OrderProductTest extends TestCase
 {
-    public function testGettersSetters()
+    public function testGettersSetters():void
     {
         $product = new OrderProduct();
 
