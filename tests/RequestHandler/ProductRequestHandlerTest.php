@@ -106,7 +106,7 @@ class ProductRequestHandlerTest extends TestCase
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertEquals('OK', $response->getReasonPhrase());
         $this->assertEquals(
-            '{"material":"Wood","shortdescription":"A chair","basic_attributes":"black, wood","description":"A black wooden chair","id":"4711","images":[{"url":"http:\/\/my.shop.url\/image.jpeg","isDefault":true,"Position":1}],"title":"Black wooden chair","price":29.99,"quantity":12,"sku":"CH_BLK","ean":"9876543210789","manufacturer":"Lumberjack  Furnitures","isdigital":false,"weight":5.99,"vat_rate":19,"lengthcm":45,"widthcm":45,"heightcm":120,"customfields":{}}',
+            '{"material":"Wood","shortdescription":"A chair","basic_attributes":"black, wood","description":"A black wooden chair","id":"4711","images":[{"url":"http:\/\/my.shop.url\/image.jpeg","isDefault":true,"Position":1}],"title":"Black wooden chair","price":29.99,"quantity":12.0,"sku":"CH_BLK","ean":"9876543210789","manufacturer":"Lumberjack  Furnitures","isdigital":false,"weight":5.99,"vat_rate":19.0,"lengthcm":45.0,"widthcm":45.0,"heightcm":120.0,"customfields":{}}',
             (string)$response->getBody()
         );
     }
@@ -141,8 +141,8 @@ class ProductRequestHandlerTest extends TestCase
         $response = $handler->handle($request, ['Action' => 'GetProducts']);
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertEquals('OK', $response->getReasonPhrase());
-        $json = '{"paging":{"page":1,"totalCount":1,"totalPages":1},"products":[{"material":"Wood","shortdescription":"A chair","basic_attributes":"black, wood","description":"A black wooden chair","id":"4711","images":[{"url":"http:\/\/my.shop.url\/image.jpeg","isDefault":true,"Position":1}],"title":"Black wooden chair","price":29.99,"quantity":12,"sku":"CH_BLK","ean":"9876543210789","manufacturer":"Lumberjack  Furnitures","isdigital":false,"weight":5.99,"vat_rate":19,"lengthcm":45,"widthcm":45,"heightcm":120,"customfields":{}}]}';
-        $this->assertEquals($json, $response->getBody());
+        $json = '{"paging":{"page":1,"totalCount":1,"totalPages":1},"products":[{"material":"Wood","shortdescription":"A chair","basic_attributes":"black, wood","description":"A black wooden chair","id":"4711","images":[{"url":"http:\/\/my.shop.url\/image.jpeg","isDefault":true,"Position":1}],"title":"Black wooden chair","price":29.99,"quantity":12.0,"sku":"CH_BLK","ean":"9876543210789","manufacturer":"Lumberjack  Furnitures","isdigital":false,"weight":5.99,"vat_rate":19.0,"lengthcm":45.0,"widthcm":45.0,"heightcm":120.0,"customfields":{}}]}';
+        $this->assertEquals($json, (string)$response->getBody());
     }
 
     private function createDemoProduct()
