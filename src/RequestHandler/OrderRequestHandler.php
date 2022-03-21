@@ -114,8 +114,8 @@ class OrderRequestHandler extends RequestHandlerBase
             return Response::badRequest('Es wurde keine OrderId übergeben');
         }
 
-        if (!isset($data['NewStateId']) || empty($newStateId = (int)trim($data['NewStateId']))) {
-            return Response::badRequest('Es wurde keine NewStateId übergeben');
+        if (!isset($data['NewStateTypeId']) || empty($newStateId = (int)trim($data['NewStateTypeId']))) {
+            return Response::badRequest('Es wurde keine NewStateTypeId übergeben');
         };
 
 

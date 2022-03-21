@@ -106,7 +106,7 @@ class OrderRequestHandlerTest extends TestCase
         $request = new Request();
         $uri = new Uri('http://localhost/?Action=AckOrder');
         $req = $request->withUri($uri)
-                       ->withBody(new MemoryStream(json_encode(['OrderId' => '1'])));
+                       ->withBody(new MemoryStream(http_build_query(['OrderId' => '1'])));
 
         $response = $handler->handle($req, ['Action' => 'AckOrder']);
 
@@ -124,7 +124,7 @@ class OrderRequestHandlerTest extends TestCase
         $request = new Request();
         $uri = new Uri('http://localhost/?Action=AckOrder&OrderId=1');
         $req = $request->withUri($uri)
-                       ->withBody(new MemoryStream(json_encode(['OrderId' => '1'])));
+                       ->withBody(new MemoryStream(http_build_query(['OrderId' => '1'])));
 
 
         $response = $handler->handle($req, ['Action' => 'AckOrder']);
@@ -143,7 +143,7 @@ class OrderRequestHandlerTest extends TestCase
         $request = new Request();
         $uri = new Uri('http://localhost/?Action=AckOrder&OrderId=1');
         $req = $request->withUri($uri)
-                       ->withBody(new MemoryStream(json_encode(['OrderId' => '1'])));
+                       ->withBody(new MemoryStream(http_build_query(['OrderId' => '1'])));
 
 
         $response = $handler->handle($req, ['Action' => 'AckOrder']);
@@ -234,19 +234,19 @@ class OrderRequestHandlerTest extends TestCase
         $this->assertEquals('Es wurde keine OrderId übergeben', (string)$response->getBody());
     }
 
-    public function testSetOrderStateFailsNoNewStateId()
+    public function testSetOrderStateFailsNoNewStateTypeId()
     {
         $repo = $this->createMock(OrdersRepositoryInterface::class);
         $handler = new OrderRequestHandler($repo);
 
         $request = new Request();
         $uri = new Uri('http://localhost/?Action=SetOrderState');
-        $req = $request->withUri($uri)->withBody(new MemoryStream(json_encode(['OrderId' => '1'])));
+        $req = $request->withUri($uri)->withBody(new MemoryStream(http_build_query(['OrderId' => '1'])));
 
         $response = $handler->handle($req, ['Action' => 'SetOrderState']);
 
         $this->assertEquals(400, $response->getStatusCode());
-        $this->assertEquals('Es wurde keine NewStateId übergeben', (string)$response->getBody());
+        $this->assertEquals('Es wurde keine NewStateTypeId übergeben', (string)$response->getBody());
     }
 
     public function testSetOrderStateFailsNotFound()
@@ -258,7 +258,7 @@ class OrderRequestHandlerTest extends TestCase
 
         $request = new Request();
         $uri = new Uri('http://localhost/?Action=SetOrderState');
-        $req = $request->withUri($uri)->withBody(new MemoryStream(json_encode(['OrderId' => 1, 'NewStateId' => 1])));
+        $req = $request->withUri($uri)->withBody(new MemoryStream(http_build_query(['OrderId' => 1, 'NewStateTypeId' => 1])));
 
         $response = $handler->handle($req, ['Action' => 'SetOrderState']);
 
@@ -275,7 +275,7 @@ class OrderRequestHandlerTest extends TestCase
 
         $request = new Request();
         $uri = new Uri('http://localhost/?Action=SetOrderState');
-        $req = $request->withUri($uri)->withBody(new MemoryStream(json_encode(['OrderId' => 1, 'NewStateId' => 1])));
+        $req = $request->withUri($uri)->withBody(new MemoryStream(http_build_query(['OrderId' => 1, 'NewStateTypeId' => 1])));
 
         $response = $handler->handle($req, ['Action' => 'SetOrderState', 'OrderId' => '1']);
 
@@ -292,7 +292,7 @@ class OrderRequestHandlerTest extends TestCase
 
         $request = new Request();
         $uri = new Uri('http://localhost/?Action=SetOrderState');
-        $req = $request->withUri($uri)->withBody(new MemoryStream(json_encode(['OrderId' => 1, 'NewStateId' => 1])));
+        $req = $request->withUri($uri)->withBody(new MemoryStream(http_build_query(['OrderId' => 1, 'NewStateTypeId' => 1])));
 
         $response = $handler->handle($req, ['Action' => 'SetOrderState', 'OrderId' => '1']);
 
