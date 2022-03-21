@@ -1,5 +1,14 @@
 # Changelog
 
+## v2.1.1 (21. Mar 2022)
+
+Bug Fixes:
+- Fixed the post body deserialization. Billbee sends the payload as `x-www-form-urlencoded`, not a json body.
+- Fixed the UnitTests
+- Removed the `\Throwable` usage to support PHP 5.6.
+- Using `NewStateTypeId` instead of `NewStateId` when updating the order state. `NewStateTypeId` contains an int,
+  `NewStateId` a string.
+
 ## v2.1.0 (11. Feb 2022)
 
 Updated:

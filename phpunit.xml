@@ -1,3 +1,4 @@
+<?xml version="1.0"?>
 <!--
   ~ This file is part of the Billbee Custom Shop API package.
   ~
@@ -8,16 +9,15 @@
   ~
   ~ Created by Julian Finkler <julian@mintware.de>
   -->
-
-<phpunit bootstrap="tests/autoload.php">
-    <testsuites>
-        <testsuite name="UnitTests">
-            <directory suffix="Test.php">./tests/</directory>
-        </testsuite>
-    </testsuites>
-    <filter>
-        <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">./src</directory>
-        </whitelist>
-    </filter>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" bootstrap="tests/autoload.php" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
+  <coverage processUncoveredFiles="true">
+    <include>
+      <directory suffix=".php">./src</directory>
+    </include>
+  </coverage>
+  <testsuites>
+    <testsuite name="UnitTests">
+      <directory suffix="Test.php">./tests/</directory>
+    </testsuite>
+  </testsuites>
 </phpunit>

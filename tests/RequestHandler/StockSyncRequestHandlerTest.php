@@ -59,7 +59,7 @@ class StockSyncRequestHandlerTest extends TestCase
         $repo = $this->createMock(StockSyncRepositoryInterface::class);
         $handler = new StockRequestHandler($repo);
         $request = new Request();
-        $request = $request->withBody(new MemoryStream('{"ProductId": "4177"}'));
+        $request = $request->withBody(new MemoryStream(http_build_query(['ProductId' => "4177"])));
         $response = $handler->handle($request, ['Action' => 'SetStock']);
 
         $this->assertEquals(400, $response->getStatusCode());
@@ -71,11 +71,13 @@ class StockSyncRequestHandlerTest extends TestCase
     {
         $repo = $this->createMock(StockSyncRepositoryInterface::class);
         $repo->method('SetStock')
-             ->willThrowException(new ProductNotFoundException());
+            ->willThrowException(new ProductNotFoundException());
 
         $handler = new StockRequestHandler($repo);
         $request = new Request();
-        $request = $request->withBody(new MemoryStream('{"ProductId": "4177", "AvailableStock": 123}'));
+        $request = $request->withBody(
+            new MemoryStream(http_build_query(['ProductId' => '4177', "AvailableStock" => 123]))
+        );
         $response = $handler->handle($request, ['Action' => 'SetStock']);
 
         $this->assertEquals(404, $response->getStatusCode());
@@ -87,11 +89,11 @@ class StockSyncRequestHandlerTest extends TestCase
     {
         $repo = $this->createMock(StockSyncRepositoryInterface::class);
         $repo->method('SetStock')
-             ->willThrowException(new RuntimeException("Unknown Error"));
+            ->willThrowException(new RuntimeException("Unknown Error"));
 
         $handler = new StockRequestHandler($repo);
         $request = new Request();
-        $request = $request->withBody(new MemoryStream('{"ProductId": "4177", "AvailableStock": 123}'));
+        $request = $request->withBody(new MemoryStream(http_build_query(['ProductId' => '4177', "AvailableStock" => 123])));
         $response = $handler->handle($request, ['Action' => 'SetStock']);
 
         $this->assertEquals(500, $response->getStatusCode());
@@ -106,7 +108,7 @@ class StockSyncRequestHandlerTest extends TestCase
 
         $handler = new StockRequestHandler($repo);
         $request = new Request();
-        $request = $request->withBody(new MemoryStream('{"ProductId": "4177", "AvailableStock": 123}'));
+        $request = $request->withBody(new MemoryStream(http_build_query(['ProductId' => '4177', "AvailableStock" => 123])));
         $response = $handler->handle($request, ['Action' => 'SetStock']);
 
         $this->assertEquals(200, $response->getStatusCode());

@@ -13,11 +13,10 @@
 namespace Billbee\CustomShopApi\Exception;
 
 use Exception;
-use Throwable;
 
 class NotImplementedException extends Exception
 {
-    public function __construct($code = 0, Throwable $previous = null)
+    public function __construct($code = 0, $previous = null)
     {
         parent::__construct("Diese Aktion ist nicht implementiert", $code, $previous);
     }

@@ -22,7 +22,8 @@ abstract class RequestHandlerBase implements RequestHandlerInterface
     protected function deserializeBody(RequestInterface $request)
     {
         $requestBody = (string)$request->getBody();
-        return json_decode($requestBody, true);
+        parse_str($requestBody, $deserializedBody);
+        return $deserializedBody;
     }
 
     public function canHandle(RequestInterface $request, $queryArgs = [])
