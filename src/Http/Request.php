@@ -32,7 +32,7 @@ class Request extends Message implements RequestInterface
     {
         $request = new Request();
 
-        if(isset($_SERVER['SERVER_PROTOCOL'])) {
+        if (isset($_SERVER['SERVER_PROTOCOL'])) {
             $request->protocolVersion = str_replace("HTTP/", "", $_SERVER['SERVER_PROTOCOL']);
         }
 
