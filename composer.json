@@ -7,12 +7,12 @@
     "psr/http-message": "^1.0",
     "jms/serializer": "^1.14.0 || ^3.14.0",
     "ralouphie/getallheaders": "~3.0",
-    "mintware-de/streams": "^1.0",
+    "mintware-de/streams": "^2.0.0",
     "ext-json": "*"
   },
   "require-dev": {
     "phpunit/phpunit": "^7.0 || ^8.0 || ^9.0",
-    "friendsofphp/php-cs-fixer": "^2.15",
+    "friendsofphp/php-cs-fixer": "^v3.8.0",
     "phpstan/phpstan": "^1.4"
   },
   "suggest": {
@@ -36,6 +36,10 @@
     "fix-cs": [
       "./vendor/bin/php-cs-fixer fix ./src/ --using-cache=no --rules=@PSR2",
       "./vendor/bin/php-cs-fixer fix ./tests/ --using-cache=no --rules=@PSR2"
+    ],
+    "fix-cs:dry-run": [
+      "./vendor/bin/php-cs-fixer fix ./src/ --using-cache=no --rules=@PSR2 --dry-run",
+      "./vendor/bin/php-cs-fixer fix ./tests/ --using-cache=no --rules=@PSR2 --dry-run"
     ],
     "phpstan": [
       "./vendor/bin/phpstan"
