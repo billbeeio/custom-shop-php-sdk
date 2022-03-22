@@ -2,7 +2,7 @@
 /**
  * This file is part of the Billbee Custom Shop API package.
  *
- * Copyright 2019 by Billbee GmbH
+ * Copyright 2019-2022 by Billbee GmbH
  *
  * For the full copyright and license information, please read the LICENSE
  * file that was distributed with this source code.
@@ -23,7 +23,7 @@ use RuntimeException;
 
 class StockSyncRequestHandlerTest extends TestCase
 {
-    public function testConstructor()
+    public function testConstructor(): void
     {
         $repo = $this->createMock(StockSyncRepositoryInterface::class);
 
@@ -34,15 +34,15 @@ class StockSyncRequestHandlerTest extends TestCase
         $this->assertTrue($handler->canHandle($request, ['Action' => 'SetStock']));
     }
 
-    public function testHandleNonExistent()
+    public function testHandleNonExistent(): void
     {
         $repo = $this->createMock(StockSyncRepositoryInterface::class);
         $handler = new StockRequestHandler($repo);
         $response = $handler->handle(new Request(), ['Action' => 'asdf']);
-        $this->assertNull($response);
+        $this->assertEquals(400, $response->getStatusCode());
     }
 
-    public function testSetStockFailsNoProductId()
+    public function testSetStockFailsNoProductId(): void
     {
         $repo = $this->createMock(StockSyncRepositoryInterface::class);
         $handler = new StockRequestHandler($repo);
@@ -54,7 +54,7 @@ class StockSyncRequestHandlerTest extends TestCase
         $this->assertEquals('Es wurde keine ProductId übergeben', (string)$response->getBody());
     }
 
-    public function testSetStockFailsNoAvailableStock()
+    public function testSetStockFailsNoAvailableStock(): void
     {
         $repo = $this->createMock(StockSyncRepositoryInterface::class);
         $handler = new StockRequestHandler($repo);
@@ -67,7 +67,7 @@ class StockSyncRequestHandlerTest extends TestCase
         $this->assertEquals('Es wurde kein AvailableStock übergeben', (string)$response->getBody());
     }
 
-    public function testSetStockFailsProductNotFound()
+    public function testSetStockFailsProductNotFound(): void
     {
         $repo = $this->createMock(StockSyncRepositoryInterface::class);
         $repo->method('SetStock')
@@ -85,7 +85,7 @@ class StockSyncRequestHandlerTest extends TestCase
         $this->assertEquals('Der Artikel wurde nicht gefunden', (string)$response->getBody());
     }
 
-    public function testSetStockFailsException()
+    public function testSetStockFailsException(): void
     {
         $repo = $this->createMock(StockSyncRepositoryInterface::class);
         $repo->method('SetStock')
@@ -93,7 +93,9 @@ class StockSyncRequestHandlerTest extends TestCase
 
         $handler = new StockRequestHandler($repo);
         $request = new Request();
-        $request = $request->withBody(new MemoryStream(http_build_query(['ProductId' => '4177', "AvailableStock" => 123])));
+        $request = $request->withBody(
+            new MemoryStream(http_build_query(['ProductId' => '4177', "AvailableStock" => 123]))
+        );
         $response = $handler->handle($request, ['Action' => 'SetStock']);
 
         $this->assertEquals(500, $response->getStatusCode());
@@ -102,13 +104,15 @@ class StockSyncRequestHandlerTest extends TestCase
     }
 
 
-    public function testSetStock()
+    public function testSetStock(): void
     {
         $repo = $this->createMock(StockSyncRepositoryInterface::class);
 
         $handler = new StockRequestHandler($repo);
         $request = new Request();
-        $request = $request->withBody(new MemoryStream(http_build_query(['ProductId' => '4177', "AvailableStock" => 123])));
+        $request = $request->withBody(
+            new MemoryStream(http_build_query(['ProductId' => '4177', "AvailableStock" => 123]))
+        );
         $response = $handler->handle($request, ['Action' => 'SetStock']);
 
         $this->assertEquals(200, $response->getStatusCode());

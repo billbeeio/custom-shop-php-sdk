@@ -2,7 +2,7 @@
 /**
  * This file is part of the Billbee Custom Shop API package.
  *
- * Copyright 2019 by Billbee GmbH
+ * Copyright 2019-2022 by Billbee GmbH
  *
  * For the full copyright and license information, please read the LICENSE
  * file that was distributed with this source code.
@@ -24,11 +24,11 @@ interface ProductsRepositoryInterface extends RepositoryInterface
      *
      * @param int $page The page, 1 is the first page.
      * @param int $pageSize The number of products per page
-     * @return PagedData A PagedData object which holds the found products
+     * @return PagedData<Product> A PagedData object which holds the found products
      *
      * @throws NotImplementedException If the method is not implemented
      */
-    public function getProducts($page, $pageSize);
+    public function getProducts(int $page, int $pageSize): PagedData;
 
     /**
      * Returns a single product by the id
@@ -39,5 +39,5 @@ interface ProductsRepositoryInterface extends RepositoryInterface
      * @throws NotImplementedException If the method is not implemented
      * @throws ProductNotFoundException If the product does not exist
      */
-    public function getProduct($productId);
+    public function getProduct(string $productId): Product;
 }

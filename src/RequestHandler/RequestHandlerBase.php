@@ -2,7 +2,7 @@
 /**
  * This file is part of the Billbee Custom Shop API package.
  *
- * Copyright 2019 by Billbee GmbH
+ * Copyright 2019-2022 by Billbee GmbH
  *
  * For the full copyright and license information, please read the LICENSE
  * file that was distributed with this source code.
@@ -17,16 +17,18 @@ use Psr\Http\Message\RequestInterface;
 
 abstract class RequestHandlerBase implements RequestHandlerInterface
 {
-    protected $supportedActions = [];
+    /** @var string[] */
+    protected array $supportedActions = [];
 
-    protected function deserializeBody(RequestInterface $request)
+    /** @return array<string, mixed> */
+    protected function deserializeBody(RequestInterface $request): array
     {
         $requestBody = (string)$request->getBody();
         parse_str($requestBody, $deserializedBody);
         return $deserializedBody;
     }
 
-    public function canHandle(RequestInterface $request, $queryArgs = [])
+    public function canHandle(RequestInterface $request, array $queryArgs = []): bool
     {
         return in_array($queryArgs['Action'], $this->supportedActions);
     }

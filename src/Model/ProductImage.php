@@ -2,7 +2,7 @@
 /**
  * This file is part of the Billbee Custom Shop API package.
  *
- * Copyright 2019 by Billbee GmbH
+ * Copyright 2019-2022 by Billbee GmbH
  *
  * For the full copyright and license information, please read the LICENSE
  * file that was distributed with this source code.
@@ -17,75 +17,51 @@ use JMS\Serializer\Annotation as Serializer;
 class ProductImage
 {
     /**
-     * @var string
      * @Serializer\SerializedName("url")
      * @Serializer\Type("string")
      */
-    public $url;
+    public ?string $url = null;
 
     /**
-     * @var bool
      * @Serializer\SerializedName("isDefault")
      * @Serializer\Type("bool")
      */
-    public $isDefault = false;
+    public bool $isDefault = false;
 
     /**
-     * @var int
      * @Serializer\SerializedName("Position")
      * @Serializer\Type("int")
      */
-    public $position;
+    public ?int $position = null;
 
-    /**
-     * @return string
-     */
-    public function getUrl()
+    public function getUrl(): ?string
     {
         return $this->url;
     }
 
-    /**
-     * @param string $url
-     * @return ProductImage
-     */
-    public function setUrl($url)
+    public function setUrl(?string $url): ProductImage
     {
         $this->url = $url;
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function isDefault()
+    public function isDefault(): bool
     {
         return $this->isDefault;
     }
 
-    /**
-     * @param bool $isDefault
-     * @return ProductImage
-     */
-    public function setIsDefault($isDefault)
+    public function setIsDefault(bool $isDefault): ProductImage
     {
         $this->isDefault = $isDefault;
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getPosition()
+    public function getPosition(): ?int
     {
         return $this->position;
     }
 
-    /**
-     * @param int $position
-     * @return ProductImage
-     */
-    public function setPosition($position)
+    public function setPosition(?int $position): ProductImage
     {
         $this->position = (int)$position;
         return $this;

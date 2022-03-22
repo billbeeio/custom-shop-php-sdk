@@ -2,7 +2,7 @@
 /**
  * This file is part of the Billbee Custom Shop API package.
  *
- * Copyright 2019 by Billbee GmbH
+ * Copyright 2019-2022 by Billbee GmbH
  *
  * For the full copyright and license information, please read the LICENSE
  * file that was distributed with this source code.
@@ -12,6 +12,7 @@
 
 namespace Billbee\CustomShopApi\Model;
 
+use DateTimeInterface;
 use JMS\Serializer\Annotation as Serializer;
 
 class OrderComment
@@ -20,93 +21,65 @@ class OrderComment
      * @Serializer\SerializedName("date_added")
      * @Serializer\Type("DateTime")
      */
-    public $dateAdded;
+    public ?DateTimeInterface $dateAdded = null;
 
     /**
      * @Serializer\SerializedName("name")
      * @Serializer\Type("string")
      */
-    public $name;
+    public ?string $name = null;
 
     /**
      * @Serializer\SerializedName("comment")
      * @Serializer\Type("string")
      */
-    public $comment;
+    public ?string $comment = null;
 
     /**
      * @Serializer\SerializedName("from_customer")
      * @Serializer\Type("bool")
      */
-    public $fromCustomer = false;
+    public bool $fromCustomer = false;
 
-    /**
-     * @return mixed
-     */
-    public function getDateAdded()
+    public function getDateAdded(): ?DateTimeInterface
     {
         return $this->dateAdded;
     }
 
-    /**
-     * @param mixed $dateAdded
-     * @return OrderComment
-     */
-    public function setDateAdded($dateAdded)
+    public function setDateAdded(?DateTimeInterface $dateAdded): OrderComment
     {
         $this->dateAdded = $dateAdded;
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    /**
-     * @param mixed $name
-     * @return OrderComment
-     */
-    public function setName($name)
+    public function setName(?string $name): OrderComment
     {
         $this->name = $name;
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getComment()
+    public function getComment(): ?string
     {
         return $this->comment;
     }
 
-    /**
-     * @param mixed $comment
-     * @return OrderComment
-     */
-    public function setComment($comment)
+    public function setComment(?string $comment): OrderComment
     {
         $this->comment = $comment;
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getFromCustomer()
+    public function getFromCustomer(): bool
     {
         return $this->fromCustomer;
     }
 
-    /**
-     * @param mixed $fromCustomer
-     * @return OrderComment
-     */
-    public function setFromCustomer($fromCustomer)
+    public function setFromCustomer(bool $fromCustomer): OrderComment
     {
         $this->fromCustomer = $fromCustomer;
         return $this;

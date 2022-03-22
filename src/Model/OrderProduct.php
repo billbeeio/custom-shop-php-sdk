@@ -2,7 +2,7 @@
 /**
  * This file is part of the Billbee Custom Shop API package.
  *
- * Copyright 2019 by Billbee GmbH
+ * Copyright 2019-2022 by Billbee GmbH
  *
  * For the full copyright and license information, please read the LICENSE
  * file that was distributed with this source code.
@@ -20,189 +20,142 @@ class OrderProduct
      * @Serializer\SerializedName("discount_percent")
      * @Serializer\Type("float")
      */
-    public $discountPercent;
+    public ?float $discountPercent = null;
 
     /**
      * @Serializer\SerializedName("quantity")
      * @Serializer\Type("float")
      */
-    public $quantity;
+    public ?float $quantity = null;
 
     /**
      * @Serializer\SerializedName("unit_price")
      * @Serializer\Type("float")
      */
-    public $unitPrice;
+    public ?float $unitPrice = null;
 
     /**
      * @Serializer\SerializedName("product_id")
      * @Serializer\Type("string")
      */
-    public $productId;
+    public ?string $productId = null;
 
     /**
      * @Serializer\SerializedName("name")
      * @Serializer\Type("string")
      */
-    public $name;
+    public ?string $name = null;
 
     /**
      * @Serializer\SerializedName("sku")
      * @Serializer\Type("string")
      */
-    public $sku;
+    public ?string $sku = null;
 
     /**
      * @Serializer\SerializedName("tax_rate")
      * @Serializer\Type("float")
      */
-    public $taxRate;
+    public ?float $taxRate = null;
 
     /**
+     * @var OrderProductOption[]
      * @Serializer\SerializedName("options")
      * @Serializer\Type("array<Billbee\CustomShopApi\Model\OrderProductOption>")
      */
-    public $options;
+    public ?array $options = null;
 
-    /**
-     * @return mixed
-     */
-    public function getDiscountPercent()
+    public function getDiscountPercent(): ?float
     {
         return $this->discountPercent;
     }
 
-    /**
-     * @param mixed $discountPercent
-     * @return OrderProduct
-     */
-    public function setDiscountPercent($discountPercent)
+    public function setDiscountPercent(?float $discountPercent): OrderProduct
     {
         $this->discountPercent = $discountPercent;
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getQuantity()
+    public function getQuantity(): ?float
     {
         return $this->quantity;
     }
 
-    /**
-     * @param mixed $quantity
-     * @return OrderProduct
-     */
-    public function setQuantity($quantity)
+    public function setQuantity(?float $quantity): OrderProduct
     {
         $this->quantity = $quantity;
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getUnitPrice()
+
+    public function getUnitPrice(): ?float
     {
         return $this->unitPrice;
     }
 
-    /**
-     * @param mixed $unitPrice
-     * @return OrderProduct
-     */
-    public function setUnitPrice($unitPrice)
+    public function setUnitPrice(?float $unitPrice): OrderProduct
     {
         $this->unitPrice = $unitPrice;
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getProductId()
+    public function getProductId(): ?string
     {
         return $this->productId;
     }
 
-    /**
-     * @param mixed $productId
-     * @return OrderProduct
-     */
-    public function setProductId($productId)
+    public function setProductId(?string $productId): OrderProduct
     {
         $this->productId = $productId;
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    /**
-     * @param mixed $name
-     * @return OrderProduct
-     */
-    public function setName($name)
+    public function setName(?string $name): OrderProduct
     {
         $this->name = $name;
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getSku()
+    public function getSku(): ?string
     {
         return $this->sku;
     }
 
-    /**
-     * @param mixed $sku
-     * @return OrderProduct
-     */
-    public function setSku($sku)
+    public function setSku(?string $sku): OrderProduct
     {
         $this->sku = $sku;
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getTaxRate()
+
+    public function getTaxRate(): ?float
     {
         return $this->taxRate;
     }
 
-    /**
-     * @param mixed $taxRate
-     * @return OrderProduct
-     */
-    public function setTaxRate($taxRate)
+    public function setTaxRate(?float $taxRate): OrderProduct
     {
         $this->taxRate = $taxRate;
         return $this;
     }
 
     /**
-     * @return mixed
+     * @return OrderProductOption[]|null
      */
-    public function getOptions()
+    public function getOptions(): ?array
     {
         return $this->options;
     }
 
     /**
-     * @param mixed $options
-     * @return OrderProduct
+     * @param OrderProductOption[]|null $options
      */
-    public function setOptions($options)
+    public function setOptions(?array $options): OrderProduct
     {
         $this->options = $options;
         return $this;

@@ -2,7 +2,7 @@
 /**
  * This file is part of the Billbee Custom Shop API package.
  *
- * Copyright 2019 by Billbee GmbH
+ * Copyright 2019-2022 by Billbee GmbH
  *
  * For the full copyright and license information, please read the LICENSE
  * file that was distributed with this source code.
@@ -15,27 +15,31 @@ namespace Billbee\Tests\CustomShopApi\Http;
 use Billbee\CustomShopApi\Http\Message;
 use MintWare\Streams\MemoryStream;
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\RequestInterface;
 
 class MessageTraitTest extends TestCase
 {
-    public function testConstructor()
+    public function testConstructor(): void
     {
+        /** @var Message<RequestInterface> $mock */
         $mock = $this->getMockForAbstractClass(Message::class);
 
         $this->assertSame('1.1', $mock->getProtocolVersion());
         $this->assertSame([], $mock->getHeaders());
-        $this->assertNull($mock->getBody());
+        $this->assertNotNull($mock->getBody());
     }
 
-    public function testWithProtocolVersion()
+    public function testWithProtocolVersion(): void
     {
+        /** @var Message<RequestInterface> $mock */
         $mock = $this->getMockForAbstractClass(Message::class);
         $newTrait = $mock->withProtocolVersion('1.2');
         $this->assertEquals('1.2', $newTrait->getProtocolVersion());
     }
 
-    public function testHeaders()
+    public function testHeaders(): void
     {
+        /** @var Message<RequestInterface> $mock */
         $mock = $this->getMockForAbstractClass(Message::class);
         $this->assertFalse($mock->hasHeader('foo'));
         $this->assertEmpty($mock->getHeaders());
@@ -60,8 +64,9 @@ class MessageTraitTest extends TestCase
         $this->assertTrue($newTrait->hasHeader('baz'));
     }
 
-    public function testWithBody()
+    public function testWithBody(): void
     {
+        /** @var Message<RequestInterface> $mock */
         $mock = $this->getMockForAbstractClass(Message::class);
         $streamMock = $this->createMock(MemoryStream::class);
 

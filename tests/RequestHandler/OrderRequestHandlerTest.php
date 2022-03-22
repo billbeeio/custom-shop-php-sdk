@@ -2,7 +2,7 @@
 /**
  * This file is part of the Billbee Custom Shop API package.
  *
- * Copyright 2019 by Billbee GmbH
+ * Copyright 2019-2022 by Billbee GmbH
  *
  * For the full copyright and license information, please read the LICENSE
  * file that was distributed with this source code.
@@ -29,7 +29,7 @@ use Psr\Http\Message\RequestInterface;
 
 class OrderRequestHandlerTest extends TestCase
 {
-    public function testConstructor()
+    public function testConstructor(): void
     {
         $repo = $this->createMock(OrdersRepositoryInterface::class);
 
@@ -42,11 +42,11 @@ class OrderRequestHandlerTest extends TestCase
         }
     }
 
-    public function testGetOrders()
+    public function testGetOrders(): void
     {
         $repo = $this->createMock(OrdersRepositoryInterface::class);
         $repo->method('getOrders')
-             ->willReturn(new PagedData([$this->createDemoOrder()], 1));
+            ->willReturn(new PagedData([$this->createDemoOrder()], 1));
         $handler = new OrderRequestHandler($repo);
 
         $request = new Request();
@@ -56,7 +56,8 @@ class OrderRequestHandlerTest extends TestCase
         parse_str($uri->getQuery(), $arguments);
 
         $response = $handler->handle($req, $arguments);
-        $data = json_decode($response->getBody(), true);
+        /** @var array{"paging": array{"page": int, "totalPages": int, "totalCount": int}} $data */
+        $data = json_decode((string)$response->getBody(), true);
 
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertEquals(1, $data['paging']['page']);
@@ -66,11 +67,11 @@ class OrderRequestHandlerTest extends TestCase
         $this->assertEquals($body, (string)$response->getBody());
     }
 
-    public function testGetOrdersFailsInvalidDAte()
+    public function testGetOrdersFailsInvalidDAte(): void
     {
         $repo = $this->createMock(OrdersRepositoryInterface::class);
         $repo->method('getOrders')
-             ->willReturn(new PagedData([$this->createDemoOrder()], 1));
+            ->willReturn(new PagedData([$this->createDemoOrder()], 1));
         $handler = new OrderRequestHandler($repo);
 
         $request = new Request();
@@ -79,10 +80,13 @@ class OrderRequestHandlerTest extends TestCase
 
         $response = $handler->handle($req, ['Action' => 'GetOrders', 'StartDate' => 'Hallo Welt']);
         $this->assertEquals(500, $response->getStatusCode());
-        $this->assertEquals('Der Wert Hallo Welt konnte nicht in eine gültiges Datum umgewandelt werden.', (string)$response->getBody());
+        $this->assertEquals(
+            'Der Wert Hallo Welt konnte nicht in eine gültiges Datum umgewandelt werden.',
+            (string)$response->getBody()
+        );
     }
 
-    public function testAckOrderFailsNoOrderId()
+    public function testAckOrderFailsNoOrderId(): void
     {
         $repo = $this->createMock(OrdersRepositoryInterface::class);
         $handler = new OrderRequestHandler($repo);
@@ -97,18 +101,18 @@ class OrderRequestHandlerTest extends TestCase
         $this->assertEquals('Es wurde keine OrderId übergeben', (string)$response->getBody());
     }
 
-    public function testAckOrderFailsNotFound()
+    public function testAckOrderFailsNotFound(): void
     {
         $repo = $this->createMock(OrdersRepositoryInterface::class);
         $repo->method('acknowledgeOrder')
-             ->willThrowException(new OrderNotFoundException());
+            ->willThrowException(new OrderNotFoundException());
         $handler = new OrderRequestHandler($repo);
 
         /** @var RequestInterface $request */
         $request = new Request();
         $uri = new Uri('http://localhost/?Action=AckOrder');
         $req = $request->withUri($uri)
-                       ->withBody(new MemoryStream(http_build_query(['OrderId' => '1'])));
+            ->withBody(new MemoryStream(http_build_query(['OrderId' => '1'])));
 
         $response = $handler->handle($req, ['Action' => 'AckOrder']);
 
@@ -116,18 +120,18 @@ class OrderRequestHandlerTest extends TestCase
         $this->assertEquals('Die Bestellung wurde nicht gefunden', (string)$response->getBody());
     }
 
-    public function testAckOrderFailsUnknownError()
+    public function testAckOrderFailsUnknownError(): void
     {
         $repo = $this->createMock(OrdersRepositoryInterface::class);
         $repo->method('acknowledgeOrder')
-             ->willThrowException(new Exception('Unknown Error'));
+            ->willThrowException(new Exception('Unknown Error'));
         $handler = new OrderRequestHandler($repo);
 
         /** @var RequestInterface $request */
         $request = new Request();
         $uri = new Uri('http://localhost/?Action=AckOrder&OrderId=1');
         $req = $request->withUri($uri)
-                       ->withBody(new MemoryStream(http_build_query(['OrderId' => '1'])));
+            ->withBody(new MemoryStream(http_build_query(['OrderId' => '1'])));
 
 
         $response = $handler->handle($req, ['Action' => 'AckOrder']);
@@ -136,18 +140,18 @@ class OrderRequestHandlerTest extends TestCase
         $this->assertEquals('Unknown Error', (string)$response->getBody());
     }
 
-    public function testAckOrder()
+    public function testAckOrder(): void
     {
         $repo = $this->createMock(OrdersRepositoryInterface::class);
         $repo->method('acknowledgeOrder')
-             ->willReturn(null);
+            ->willReturn(null);
         $handler = new OrderRequestHandler($repo);
 
         /** @var RequestInterface $request */
         $request = new Request();
         $uri = new Uri('http://localhost/?Action=AckOrder&OrderId=1');
         $req = $request->withUri($uri)
-                       ->withBody(new MemoryStream(http_build_query(['OrderId' => '1'])));
+            ->withBody(new MemoryStream(http_build_query(['OrderId' => '1'])));
 
 
         $response = $handler->handle($req, ['Action' => 'AckOrder']);
@@ -155,7 +159,7 @@ class OrderRequestHandlerTest extends TestCase
         $this->assertEquals(200, $response->getStatusCode());
     }
 
-    public function testGetOrderFailsNoOrderId()
+    public function testGetOrderFailsNoOrderId(): void
     {
         $repo = $this->createMock(OrdersRepositoryInterface::class);
         $handler = new OrderRequestHandler($repo);
@@ -170,11 +174,11 @@ class OrderRequestHandlerTest extends TestCase
         $this->assertEquals('Es wurde keine OrderId übergeben', (string)$response->getBody());
     }
 
-    public function testGetOrderFailsNotFound()
+    public function testGetOrderFailsNotFound(): void
     {
         $repo = $this->createMock(OrdersRepositoryInterface::class);
         $repo->method('getOrder')
-             ->willThrowException(new OrderNotFoundException());
+            ->willThrowException(new OrderNotFoundException());
         $handler = new OrderRequestHandler($repo);
 
         $request = new Request();
@@ -187,11 +191,11 @@ class OrderRequestHandlerTest extends TestCase
         $this->assertEquals('Die Bestellung wurde nicht gefunden', (string)$response->getBody());
     }
 
-    public function testGetOrderFailsUnknownError()
+    public function testGetOrderFailsUnknownError(): void
     {
         $repo = $this->createMock(OrdersRepositoryInterface::class);
         $repo->method('getOrder')
-             ->willThrowException(new Exception('Unknown Error'));
+            ->willThrowException(new Exception('Unknown Error'));
         $handler = new OrderRequestHandler($repo);
 
         $request = new Request();
@@ -204,11 +208,11 @@ class OrderRequestHandlerTest extends TestCase
         $this->assertEquals('Unknown Error', (string)$response->getBody());
     }
 
-    public function testGetOrder()
+    public function testGetOrder(): void
     {
         $repo = $this->createMock(OrdersRepositoryInterface::class);
         $repo->method('getOrder')
-             ->willReturn($this->createDemoOrder());
+            ->willReturn($this->createDemoOrder());
 
         $handler = new OrderRequestHandler($repo);
 
@@ -223,7 +227,7 @@ class OrderRequestHandlerTest extends TestCase
         $this->assertEquals($bodyJson, (string)$response->getBody());
     }
 
-    public function testSetOrderStateFailsNoOrderId()
+    public function testSetOrderStateFailsNoOrderId(): void
     {
         $repo = $this->createMock(OrdersRepositoryInterface::class);
         $handler = new OrderRequestHandler($repo);
@@ -238,7 +242,7 @@ class OrderRequestHandlerTest extends TestCase
         $this->assertEquals('Es wurde keine OrderId übergeben', (string)$response->getBody());
     }
 
-    public function testSetOrderStateFailsNoNewStateTypeId()
+    public function testSetOrderStateFailsNoNewStateTypeId(): void
     {
         $repo = $this->createMock(OrdersRepositoryInterface::class);
         $handler = new OrderRequestHandler($repo);
@@ -254,17 +258,19 @@ class OrderRequestHandlerTest extends TestCase
         $this->assertEquals('Es wurde keine NewStateTypeId übergeben', (string)$response->getBody());
     }
 
-    public function testSetOrderStateFailsNotFound()
+    public function testSetOrderStateFailsNotFound(): void
     {
         $repo = $this->createMock(OrdersRepositoryInterface::class);
         $repo->method('setOrderState')
-             ->willThrowException(new OrderNotFoundException());
+            ->willThrowException(new OrderNotFoundException());
         $handler = new OrderRequestHandler($repo);
 
         /** @var RequestInterface $request */
         $request = new Request();
         $uri = new Uri('http://localhost/?Action=SetOrderState');
-        $req = $request->withUri($uri)->withBody(new MemoryStream(http_build_query(['OrderId' => 1, 'NewStateTypeId' => 1])));
+        $req = $request->withUri($uri)->withBody(
+            new MemoryStream(http_build_query(['OrderId' => 1, 'NewStateTypeId' => 1]))
+        );
 
         $response = $handler->handle($req, ['Action' => 'SetOrderState']);
 
@@ -272,17 +278,19 @@ class OrderRequestHandlerTest extends TestCase
         $this->assertEquals('Die Bestellung wurde nicht gefunden', (string)$response->getBody());
     }
 
-    public function testSetOrderStateUnknownError()
+    public function testSetOrderStateUnknownError(): void
     {
         $repo = $this->createMock(OrdersRepositoryInterface::class);
         $repo->method('setOrderState')
-             ->willThrowException(new Exception('Unknown Error'));
+            ->willThrowException(new Exception('Unknown Error'));
         $handler = new OrderRequestHandler($repo);
 
         /** @var RequestInterface $request */
         $request = new Request();
         $uri = new Uri('http://localhost/?Action=SetOrderState');
-        $req = $request->withUri($uri)->withBody(new MemoryStream(http_build_query(['OrderId' => 1, 'NewStateTypeId' => 1])));
+        $req = $request->withUri($uri)->withBody(
+            new MemoryStream(http_build_query(['OrderId' => 1, 'NewStateTypeId' => 1]))
+        );
 
         $response = $handler->handle($req, ['Action' => 'SetOrderState', 'OrderId' => '1']);
 
@@ -290,32 +298,34 @@ class OrderRequestHandlerTest extends TestCase
         $this->assertEquals('Unknown Error', (string)$response->getBody());
     }
 
-    public function testSetOrderState()
+    public function testSetOrderState(): void
     {
         $repo = $this->createMock(OrdersRepositoryInterface::class);
         $repo->method('setOrderState')
-             ->willReturn(true);
+            ->willReturn(true);
         $handler = new OrderRequestHandler($repo);
 
         /** @var RequestInterface $request */
         $request = new Request();
         $uri = new Uri('http://localhost/?Action=SetOrderState');
-        $req = $request->withUri($uri)->withBody(new MemoryStream(http_build_query(['OrderId' => 1, 'NewStateTypeId' => 1])));
+        $req = $request->withUri($uri)->withBody(
+            new MemoryStream(http_build_query(['OrderId' => 1, 'NewStateTypeId' => 1]))
+        );
 
         $response = $handler->handle($req, ['Action' => 'SetOrderState', 'OrderId' => '1']);
 
         $this->assertEquals(200, $response->getStatusCode());
     }
 
-    public function testHandleNonExistent()
+    public function testHandleNonExistent(): void
     {
         $repo = $this->createMock(OrdersRepositoryInterface::class);
         $handler = new OrderRequestHandler($repo);
         $response = $handler->handle(new Request(), ['Action' => 'asdf']);
-        $this->assertNull($response);
+        $this->assertEquals(400, $response->getStatusCode());
     }
 
-    private function createDemoOrder()
+    private function createDemoOrder(): Order
     {
         $address = (new Address())
             ->setFirstName('Kara')

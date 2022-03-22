@@ -2,7 +2,7 @@
 /**
  * This file is part of the Billbee Custom Shop API package.
  *
- * Copyright 2019 by Billbee GmbH
+ * Copyright 2019-2022 by Billbee GmbH
  *
  * For the full copyright and license information, please read the LICENSE
  * file that was distributed with this source code.
@@ -19,8 +19,7 @@ use Psr\Http\Message\RequestInterface;
 
 class ShippingProfileRequestHandler extends RequestHandlerBase
 {
-    /** @var ShippingProfileRepositoryInterface */
-    private $shippingProfileRepository;
+    private ShippingProfileRepositoryInterface $shippingProfileRepository;
 
     public function __construct(ShippingProfileRepositoryInterface $shippingProfileRepository)
     {
@@ -28,16 +27,16 @@ class ShippingProfileRequestHandler extends RequestHandlerBase
         $this->shippingProfileRepository = $shippingProfileRepository;
     }
 
-    public function handle(RequestInterface $request, $queryArgs = [])
+    public function handle(RequestInterface $request, array $queryArgs = []): Response
     {
         if ($queryArgs['Action'] == 'GetShippingProfiles') {
             return $this->getShippingProfiles();
         }
 
-        return null;
+        return Response::notImplemented();
     }
 
-    private function getShippingProfiles()
+    private function getShippingProfiles(): Response
     {
         try {
             $profiles = $this->shippingProfileRepository->getShippingProfiles();

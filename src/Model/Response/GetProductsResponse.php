@@ -2,7 +2,7 @@
 /**
  * This file is part of the Billbee Custom Shop API package.
  *
- * Copyright 2019 by Billbee GmbH
+ * Copyright 2019-2022 by Billbee GmbH
  *
  * For the full copyright and license information, please read the LICENSE
  * file that was distributed with this source code.
@@ -19,29 +19,29 @@ use JMS\Serializer\Annotation as Serializer;
 class GetProductsResponse
 {
     /**
-     * @var Pagination
      * @Serializer\SerializedName("paging")
      * @Serializer\Type("Billbee\CustomShopApi\Model\Pagination")
      */
-    protected $paging;
+    protected Pagination $paging;
 
     /**
-     * @var Product[]
+     * @var array<Product>
      * @Serializer\SerializedName("products")
      * @Serializer\Type("array<Billbee\CustomShopApi\Model\Product>")
      */
-    protected $products;
+    protected array $products = [];
 
-    public function __construct($paging, $products)
+    /**
+     * @param Pagination $paging
+     * @param Product[] $products
+     */
+    public function __construct(Pagination $paging, array $products)
     {
         $this->paging = $paging;
         $this->products = $products;
     }
 
-    /**
-     * @return Pagination
-     */
-    public function getPaging()
+    public function getPaging(): Pagination
     {
         return $this->paging;
     }
@@ -49,7 +49,7 @@ class GetProductsResponse
     /**
      * @return Product[]
      */
-    public function getProducts()
+    public function getProducts(): array
     {
         return $this->products;
     }

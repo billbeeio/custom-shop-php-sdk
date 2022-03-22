@@ -1,5 +1,14 @@
 # Changelog
 
+## v3.0.0 (22. Mar 2022)
+
+Changes:
+- Added full PHP 8 support
+- Removed support for pre PHP 7.4
+- Improved the code style and added SCA
+  - Added type hints
+- Copyright updated
+
 ## v2.1.1 (21. Mar 2022)
 
 Bug Fixes:

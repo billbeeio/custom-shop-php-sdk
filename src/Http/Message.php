@@ -2,7 +2,7 @@
 /**
  * This file is part of the Billbee Custom Shop API package.
  *
- * Copyright 2019 by Billbee GmbH
+ * Copyright 2019-2022 by Billbee GmbH
  *
  * For the full copyright and license information, please read the LICENSE
  * file that was distributed with this source code.
@@ -12,28 +12,40 @@
 
 namespace Billbee\CustomShopApi\Http;
 
+use MintWare\Streams\MemoryStream;
+use Psr\Http\Message\MessageInterface;
 use Psr\Http\Message\StreamInterface;
 
-abstract class Message
+/**
+ * @template T
+ */
+abstract class Message implements MessageInterface
 {
-    protected $protocolVersion = "1.1";
+    protected string $protocolVersion = "1.1";
 
-    /** @var string[][] */
-    protected $headers = [];
+    /** @var array<array<string>> */
+    protected array $headers = [];
 
     /** @var StreamInterface */
-    protected $body;
+    protected StreamInterface $body;
 
+    public function __construct()
+    {
+        $this->body = new MemoryStream(null);
+    }
 
-    /** @inheritDoc */
-    public function getProtocolVersion()
+    public function getProtocolVersion(): string
     {
         return $this->protocolVersion;
     }
 
-    /** @inheritDoc */
+    /**
+     * @inheritDoc
+     * @phpstan-return T
+     */
     public function withProtocolVersion($version)
     {
+        /** @var T $request */
         $request = clone $this;
         $request->protocolVersion = $version;
 
@@ -41,7 +53,7 @@ abstract class Message
     }
 
     /** @inheritDoc */
-    public function getHeaders()
+    public function getHeaders(): array
     {
         return $this->headers;
     }
@@ -72,9 +84,13 @@ abstract class Message
         return $line;
     }
 
-    /** @inheritDoc */
+    /**
+     * @inheritDoc
+     * @phpstan-return T
+     */
     public function withHeader($name, $value)
     {
+        /** @var T $request */
         $request = clone $this;
 
         $request->headers[$name] = is_array($value) ? $value : [$value];
@@ -82,15 +98,22 @@ abstract class Message
         return $request;
     }
 
-    /** @inheritDoc */
+    /**
+     * @inheritDoc
+     * @phpstan-return T
+     */
     public function withAddedHeader($name, $value)
     {
         return $this->withHeader($name, $value);
     }
 
-    /** @inheritDoc */
+    /**
+     * @inheritDoc
+     * @phpstan-return T
+     */
     public function withoutHeader($name)
     {
+        /** @var T $request */
         $request = clone $this;
 
         if ($request->hasHeader($name)) {
@@ -100,15 +123,18 @@ abstract class Message
         return $request;
     }
 
-    /** @inheritDoc */
-    public function getBody()
+    public function getBody(): ?StreamInterface
     {
         return $this->body;
     }
 
-    /** @inheritDoc */
+    /**
+     * @inheritDoc
+     * @phpstan-return T
+     */
     public function withBody(StreamInterface $body)
     {
+        /** @var T $request */
         $request = clone $this;
 
         $request->body = $body;

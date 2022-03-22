@@ -1,6 +1,7 @@
 vendor/
 composer.lock
 client.php
-/.phpunit.result.cache
-/.idea/
-/.php_cs.cache
+.phpunit.result.cache
+.idea/
+.php_cs.cache
+.php-cs-fixer.cache

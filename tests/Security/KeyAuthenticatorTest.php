@@ -2,7 +2,7 @@
 /**
  * This file is part of the Billbee Custom Shop API package.
  *
- * Copyright 2019 by Billbee GmbH
+ * Copyright 2019-2022 by Billbee GmbH
  *
  * For the full copyright and license information, please read the LICENSE
  * file that was distributed with this source code.
@@ -20,69 +20,69 @@ use PHPUnit\Framework\TestCase;
 
 class KeyAuthenticatorTest extends TestCase
 {
-    public function testConstructor()
+    public function testConstructor(): void
     {
         $authenticator = new KeyAuthenticator('1234');
         $this->assertInstanceOf(AuthenticatorInterface::class, $authenticator);
         $this->assertEquals('1234', $authenticator->getKey());
     }
 
-    public function testIsAuthorizedNoKey()
+    public function testIsAuthorizedNoKey(): void
     {
         $uriMock = $this->createMock(Uri::class);
         $uriMock->method('getQuery')
-                ->willReturn('');
+            ->willReturn('');
 
         $request = $this->createMock(Request::class);
         $request->method('getUri')
-                ->willReturn($uriMock);
+            ->willReturn($uriMock);
 
         $authenticator = new KeyAuthenticator('1234');
         $this->assertFalse($authenticator->isAuthorized($request));
     }
 
-    public function testIsAuthorizedEmpty()
+    public function testIsAuthorizedEmpty(): void
     {
         $uriMock = $this->createMock(Uri::class);
         $uriMock->method('getQuery')
-                ->willReturn('Key=');
+            ->willReturn('Key=');
 
         $request = $this->createMock(Request::class);
         $request->method('getUri')
-                ->willReturn($uriMock);
+            ->willReturn($uriMock);
 
         $authenticator = new KeyAuthenticator('1234');
         $this->assertFalse($authenticator->isAuthorized($request));
     }
 
-    public function testIsAuthorizedWrongKey()
+    public function testIsAuthorizedWrongKey(): void
     {
         $uriMock = $this->createMock(Uri::class);
         $uriMock->method('getQuery')
-                ->willReturn('Key=foobar');
+            ->willReturn('Key=foobar');
 
         $request = $this->createMock(Request::class);
         $request->method('getUri')
-                ->willReturn($uriMock);
+            ->willReturn($uriMock);
 
         $authenticator = new KeyAuthenticator('1234');
         $this->assertFalse($authenticator->isAuthorized($request));
     }
 
-    public function testIsAuthorizedValidKey()
+    public function testIsAuthorizedValidKey(): void
     {
-        $shortenedTimestamp = substr(time(), 0, 7);
+        $shortenedTimestamp = substr((string)time(), 0, 7);
         $hash = hash_hmac('sha256', utf8_encode('1234'), utf8_encode($shortenedTimestamp));
         $encodedHash = base64_encode($hash);
         $calculatedKey = str_replace(['=', '/', '+'], '', $encodedHash);
 
         $uriMock = $this->createMock(Uri::class);
         $uriMock->method('getQuery')
-                ->willReturn('Key=' . $calculatedKey);
+            ->willReturn('Key=' . $calculatedKey);
 
         $request = $this->createMock(Request::class);
         $request->method('getUri')
-                ->willReturn($uriMock);
+            ->willReturn($uriMock);
 
         $authenticator = new KeyAuthenticator('1234');
         $this->assertTrue($authenticator->isAuthorized($request));

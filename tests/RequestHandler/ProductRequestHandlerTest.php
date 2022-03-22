@@ -2,7 +2,7 @@
 /**
  * This file is part of the Billbee Custom Shop API package.
  *
- * Copyright 2019 by Billbee GmbH
+ * Copyright 2019-2022 by Billbee GmbH
  *
  * For the full copyright and license information, please read the LICENSE
  * file that was distributed with this source code.
@@ -26,7 +26,7 @@ use RuntimeException;
 
 class ProductRequestHandlerTest extends TestCase
 {
-    public function testConstructor()
+    public function testConstructor(): void
     {
         $repo = $this->createMock(ProductsRepositoryInterface::class);
 
@@ -39,15 +39,15 @@ class ProductRequestHandlerTest extends TestCase
         }
     }
 
-    public function testHandleNonExistent()
+    public function testHandleNonExistent(): void
     {
         $repo = $this->createMock(ProductsRepositoryInterface::class);
         $handler = new ProductRequestHandler($repo);
         $response = $handler->handle(new Request(), ['Action' => 'asdf']);
-        $this->assertNull($response);
+        $this->assertEquals(400, $response->getStatusCode());
     }
 
-    public function testGetProductFailsNoProductId()
+    public function testGetProductFailsNoProductId(): void
     {
         $repo = $this->createMock(ProductsRepositoryInterface::class);
         $handler = new ProductRequestHandler($repo);
@@ -60,11 +60,11 @@ class ProductRequestHandlerTest extends TestCase
         $this->assertEquals('Es wurde keine ProductId übergeben', (string)$response->getBody());
     }
 
-    public function testGetProductFailsProductNotFound()
+    public function testGetProductFailsProductNotFound(): void
     {
         $repo = $this->createMock(ProductsRepositoryInterface::class);
         $repo->method('getProduct')
-             ->willThrowException(new ProductNotFoundException());
+            ->willThrowException(new ProductNotFoundException());
 
         $handler = new ProductRequestHandler($repo);
         $request = new Request();
@@ -76,11 +76,11 @@ class ProductRequestHandlerTest extends TestCase
         $this->assertEquals('Der Artikel wurde nicht gefunden', (string)$response->getBody());
     }
 
-    public function testGetProductFailsException()
+    public function testGetProductFailsException(): void
     {
         $repo = $this->createMock(ProductsRepositoryInterface::class);
         $repo->method('getProduct')
-             ->willThrowException(new RuntimeException("Unknown Error"));
+            ->willThrowException(new RuntimeException("Unknown Error"));
 
         $handler = new ProductRequestHandler($repo);
         $request = new Request();
@@ -92,11 +92,11 @@ class ProductRequestHandlerTest extends TestCase
         $this->assertEquals('Unknown Error', (string)$response->getBody());
     }
 
-    public function testGetProduct()
+    public function testGetProduct(): void
     {
         $repo = $this->createMock(ProductsRepositoryInterface::class);
         $repo->method('getProduct')
-             ->willReturn($this->createDemoProduct());
+            ->willReturn($this->createDemoProduct());
 
         $handler = new ProductRequestHandler($repo);
         $request = new Request();
@@ -111,11 +111,11 @@ class ProductRequestHandlerTest extends TestCase
         );
     }
 
-    public function testGetProductsFailsException()
+    public function testGetProductsFailsException(): void
     {
         $repo = $this->createMock(ProductsRepositoryInterface::class);
         $repo->method('getProducts')
-             ->willThrowException(new RuntimeException("Unknown Error"));
+            ->willThrowException(new RuntimeException("Unknown Error"));
 
         $handler = new ProductRequestHandler($repo);
         $request = new Request();
@@ -127,11 +127,11 @@ class ProductRequestHandlerTest extends TestCase
         $this->assertEquals('Unknown Error', (string)$response->getBody());
     }
 
-    public function testGetProducts()
+    public function testGetProducts(): void
     {
         $repo = $this->createMock(ProductsRepositoryInterface::class);
         $repo->method('getProducts')
-             ->willReturn(new PagedData([$this->createDemoProduct()], 1));
+            ->willReturn(new PagedData([$this->createDemoProduct()], 1));
 
         $handler = new ProductRequestHandler($repo);
         $request = new Request();
@@ -145,7 +145,7 @@ class ProductRequestHandlerTest extends TestCase
         $this->assertEquals($json, (string)$response->getBody());
     }
 
-    private function createDemoProduct()
+    private function createDemoProduct(): Product
     {
         return (new Product())
             ->setMaterial('Wood')

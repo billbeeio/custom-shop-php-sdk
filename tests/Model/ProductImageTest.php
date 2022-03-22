@@ -2,7 +2,7 @@
 /**
  * This file is part of the Billbee Custom Shop API package.
  *
- * Copyright 2019 by Billbee GmbH
+ * Copyright 2019-2022 by Billbee GmbH
  *
  * For the full copyright and license information, please read the LICENSE
  * file that was distributed with this source code.
@@ -17,7 +17,7 @@ use PHPUnit\Framework\TestCase;
 
 class ProductImageTest extends TestCase
 {
-    public function testGettersSetters()
+    public function testGettersSetters(): void
     {
         $image = new ProductImage();
         $this->assertNull($image->getUrl());
@@ -26,7 +26,7 @@ class ProductImageTest extends TestCase
 
         $image->setUrl('http://domain.tld/image.jpeg');
         $image->setIsDefault(true);
-        $image->setPosition('3');
+        $image->setPosition(3);
 
         $this->assertSame('http://domain.tld/image.jpeg', $image->getUrl());
         $this->assertTrue($image->isDefault());

@@ -2,7 +2,7 @@
 /**
  * This file is part of the Billbee Custom Shop API package.
  *
- * Copyright 2019 by Billbee GmbH
+ * Copyright 2019-2022 by Billbee GmbH
  *
  * For the full copyright and license information, please read the LICENSE
  * file that was distributed with this source code.
@@ -19,13 +19,13 @@ use Psr\Http\Message\RequestInterface;
 
 class RequestTest extends TestCase
 {
-    public function testConstructor()
+    public function testConstructor(): void
     {
         $request = new Request();
         $this->assertInstanceOf(RequestInterface::class, $request);
     }
 
-    public function testCreateFromGlobals()
+    public function testCreateFromGlobals(): void
     {
         $_SERVER['SERVER_PROTOCOL'] = 'HTTP/1.2';
         $_SERVER['HTTPS'] = 1;
@@ -42,21 +42,21 @@ class RequestTest extends TestCase
         $this->assertSame('/index.php', $request->getRequestTarget());
     }
 
-    public function testWithRequestTarget()
+    public function testWithRequestTarget(): void
     {
         $request = new Request();
         $newRequest = $request->withRequestTarget('/foo.php');
         $this->assertSame('/foo.php', $newRequest->getRequestTarget());
     }
 
-    public function testWithMethod()
+    public function testWithMethod(): void
     {
         $request = new Request();
         $newRequest = $request->withMethod('DELETE');
         $this->assertSame('DELETE', $newRequest->getMethod());
     }
 
-    public function testWithUri()
+    public function testWithUri(): void
     {
         $request = new Request();
 

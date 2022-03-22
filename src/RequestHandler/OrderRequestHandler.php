@@ -2,7 +2,7 @@
 /**
  * This file is part of the Billbee Custom Shop API package.
  *
- * Copyright 2019 by Billbee GmbH
+ * Copyright 2019-2022 by Billbee GmbH
  *
  * For the full copyright and license information, please read the LICENSE
  * file that was distributed with this source code.
@@ -24,8 +24,7 @@ use stdClass;
 
 class OrderRequestHandler extends RequestHandlerBase
 {
-    /** @var OrdersRepositoryInterface */
-    private $ordersRepository;
+    private OrdersRepositoryInterface $ordersRepository;
 
     public function __construct(OrdersRepositoryInterface $ordersRepository)
     {
@@ -33,7 +32,12 @@ class OrderRequestHandler extends RequestHandlerBase
         $this->supportedActions = ['GetOrders', 'AckOrder', 'GetOrder', 'SetOrderState'];
     }
 
-    public function handle(RequestInterface $request, $queryArgs = [])
+    /**
+     * @param RequestInterface $request
+     * @param array<string, string> $queryArgs
+     * @return Response
+     */
+    public function handle(RequestInterface $request, array $queryArgs = []): Response
     {
         if (isset($queryArgs['Action'])) {
             if ($queryArgs['Action'] == 'GetOrders') {
@@ -53,15 +57,20 @@ class OrderRequestHandler extends RequestHandlerBase
             }
         }
 
-        return null;
+        return Response::notImplemented();
     }
 
-    private function getOrders($arguments)
+    /**
+     * @param array<string, string> $arguments
+     * @return Response
+     */
+    private function getOrders(array $arguments): Response
     {
+        /*** @var array{"Page": ?string, "PageSize": ?string, "StartDate": ?string} $arguments */
         $page = isset($arguments['Page']) ? (int)$arguments['Page'] : 1;
         $pageSize = isset($arguments['PageSize']) ? (int)$arguments['PageSize'] : 1;
         try {
-            $startDate = new DateTime(isset($arguments['StartDate']) ? $arguments['StartDate'] : '-30 days');
+            $startDate = new DateTime($arguments['StartDate'] ?? '-30 days');
         } catch (Exception $e) {
             return Response::internalServerError("Der Wert {$arguments['StartDate']} konnte nicht in eine gültiges Datum umgewandelt werden.");
         }
@@ -73,8 +82,9 @@ class OrderRequestHandler extends RequestHandlerBase
         return Response::json($response);
     }
 
-    private function ackOrder($request)
+    private function ackOrder(RequestInterface $request): Response
     {
+        /** @var array{"OrderId": ?string} $data */
         $data = $this->deserializeBody($request);
 
         if (!isset($data['OrderId']) || empty($orderId = trim($data['OrderId']))) {
@@ -91,8 +101,13 @@ class OrderRequestHandler extends RequestHandlerBase
         }
     }
 
-    private function getOrder($arguments)
+    /**
+     * @param array<string, string> $arguments
+     * @return Response
+     */
+    private function getOrder(array $arguments): Response
     {
+        /** @var array{"OrderId": ?string} $arguments */
         if (!isset($arguments['OrderId']) || empty($orderId = trim($arguments['OrderId']))) {
             return Response::badRequest('Es wurde keine OrderId übergeben');
         }
@@ -106,8 +121,9 @@ class OrderRequestHandler extends RequestHandlerBase
         }
     }
 
-    private function setOrderState(RequestInterface $request)
+    private function setOrderState(RequestInterface $request): Response
     {
+        /** @var array{"OrderId": ?string, "NewStateTypeId": ?string, "Comment": ?string} $data */
         $data = $this->deserializeBody($request);
 
         if (!isset($data['OrderId']) || empty($orderId = trim($data['OrderId']))) {
@@ -119,7 +135,7 @@ class OrderRequestHandler extends RequestHandlerBase
         };
 
 
-        $comment = isset($data['Comment']) ? $data['Comment'] : "";
+        $comment = $data['Comment'] ?? "";
 
         try {
             $this->ordersRepository->setOrderState($orderId, $newStateId, $comment);
@@ -131,10 +147,7 @@ class OrderRequestHandler extends RequestHandlerBase
         }
     }
 
-    /**
-     * @return Response
-     */
-    private function createOrderNotFoundResponse()
+    private function createOrderNotFoundResponse(): Response
     {
         return Response::notFound('Die Bestellung wurde nicht gefunden');
     }

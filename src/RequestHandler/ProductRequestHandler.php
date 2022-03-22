@@ -2,7 +2,7 @@
 /**
  * This file is part of the Billbee Custom Shop API package.
  *
- * Copyright 2019 by Billbee GmbH
+ * Copyright 2019-2022 by Billbee GmbH
  *
  * For the full copyright and license information, please read the LICENSE
  * file that was distributed with this source code.
@@ -22,8 +22,7 @@ use Psr\Http\Message\RequestInterface;
 
 class ProductRequestHandler extends RequestHandlerBase
 {
-    /** @var ProductsRepositoryInterface */
-    private $productsRepository;
+    private ProductsRepositoryInterface $productsRepository;
 
     public function __construct(ProductsRepositoryInterface $productsRepository)
     {
@@ -31,21 +30,32 @@ class ProductRequestHandler extends RequestHandlerBase
         $this->supportedActions = ['GetProduct', 'GetProducts'];
     }
 
-    public function handle(RequestInterface $request, $queryArgs = [])
+    /**
+     * @param RequestInterface $request
+     * @param array<string, string> $queryArgs
+     * @return Response
+     */
+    public function handle(RequestInterface $request, array $queryArgs = []): Response
     {
-        if ($queryArgs['Action'] == 'GetProduct') {
-            return $this->getProduct($queryArgs);
-        }
+        if (isset($queryArgs['Action'])) {
+            if ($queryArgs['Action'] == 'GetProduct') {
+                return $this->getProduct($queryArgs);
+            }
 
-        if ($queryArgs['Action'] == 'GetProducts') {
-            return $this->getProducts($queryArgs);
+            if ($queryArgs['Action'] == 'GetProducts') {
+                return $this->getProducts($queryArgs);
+            }
         }
-
-        return null;
+        return Response::notImplemented();
     }
 
-    private function getProduct($queryArgs)
+    /**
+     * @param array<string, string> $queryArgs
+     * @return Response
+     */
+    private function getProduct(array $queryArgs): Response
     {
+        /** @var array{"ProductId": ?string} $queryArgs */
         if (!isset($queryArgs['ProductId']) || empty($productId = trim($queryArgs['ProductId']))) {
             return Response::badRequest('Es wurde keine ProductId übergeben');
         }
@@ -60,8 +70,13 @@ class ProductRequestHandler extends RequestHandlerBase
         }
     }
 
-    private function getProducts($queryArgs)
+    /**
+     * @param array<string, string> $queryArgs
+     * @return Response
+     */
+    private function getProducts(array $queryArgs): Response
     {
+        /** @var array{"Page": ?string, "PageSize": ?string} $queryArgs */
         $page = isset($queryArgs['Page']) ? (int)$queryArgs['Page'] : 1;
         $pageSize = isset($queryArgs['PageSize']) ? (int)$queryArgs['PageSize'] : 100;
 
