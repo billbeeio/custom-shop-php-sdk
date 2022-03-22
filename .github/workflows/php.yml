@@ -37,3 +37,6 @@ jobs:
 
     - name: Run SCA
       run: composer run-script phpstan
+      
+    - name: Run CS
+      run: composer run-script fix-cs:dry-run
