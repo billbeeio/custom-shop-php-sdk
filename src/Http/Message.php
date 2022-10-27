@@ -67,7 +67,7 @@ abstract class Message implements MessageInterface
     /** @inheritDoc */
     public function getHeader($name)
     {
-        return $this->headers[$name];
+        return $this->headers[$name] ?? [];
     }
 
     /** @inheritDoc */
