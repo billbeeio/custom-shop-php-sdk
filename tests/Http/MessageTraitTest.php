@@ -62,6 +62,7 @@ class MessageTraitTest extends TestCase
         $newTrait = $newTrait->withoutHeader('foo');
         $this->assertFalse($newTrait->hasHeader('foo'));
         $this->assertTrue($newTrait->hasHeader('baz'));
+        $this->assertEquals([], $newTrait->getHeader('foo'));
     }
 
     public function testWithBody(): void
