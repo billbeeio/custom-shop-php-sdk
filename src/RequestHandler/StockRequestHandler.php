@@ -46,7 +46,7 @@ class StockRequestHandler extends RequestHandlerBase
             return Response::badRequest('Es wurde keine ProductId übergeben');
         }
 
-        if (!isset($data['AvailableStock']) || empty($availableStock = (float)trim($data['AvailableStock']))) {
+        if (!isset($data['AvailableStock']) || ($data['AvailableStock'] !== "0" && empty($availableStock = (float)trim($data['AvailableStock'])))) {
             return Response::badRequest('Es wurde kein AvailableStock übergeben');
         };
 
