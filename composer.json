@@ -8,7 +8,8 @@
     "jms/serializer": "^1.14.0 || ^3.14.0",
     "ralouphie/getallheaders": "~3.0",
     "mintware-de/streams": "^2.0.0",
-    "ext-json": "*"
+    "ext-json": "*",
+    "doctrine/annotations": "^2.0"
   },
   "require-dev": {
     "phpunit/phpunit": "^7.0 || ^8.0 || ^9.0",

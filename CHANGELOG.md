@@ -1,5 +1,9 @@
 # Changelog
 
+## v3.0.1 (25. Apr 2024)
+Bug Fixes:
+- Fix "Uncaught Error: Class 'Doctrine\\Common\\Annotations\\AnnotationRegistry' not found"
+
 ## v3.0.0 (22. Mar 2022)
 
 Changes:

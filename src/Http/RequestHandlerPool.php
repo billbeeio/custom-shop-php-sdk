@@ -22,7 +22,6 @@ use Billbee\CustomShopApi\RequestHandler\ProductRequestHandler;
 use Billbee\CustomShopApi\RequestHandler\ShippingProfileRequestHandler;
 use Billbee\CustomShopApi\RequestHandler\StockRequestHandler;
 use Billbee\CustomShopApi\Security\AuthenticatorInterface;
-use Doctrine\Common\Annotations\AnnotationRegistry;
 use Psr\Http\Message\RequestInterface;
 
 class RequestHandlerPool
@@ -40,8 +39,6 @@ class RequestHandlerPool
         ?AuthenticatorInterface $authenticator,
         array $repositories = []
     ) {
-        AnnotationRegistry::registerLoader('class_exists');
-
         $this->authenticator = $authenticator;
 
         foreach ($repositories as $repository) {
