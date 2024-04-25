@@ -2,6 +2,7 @@
 
 ## v3.0.1 (25. Apr 2024)
 Bug Fixes:
+- Fix the getHeader return value in the MessageInterface implementation ([PR #13](https://github.com/billbeeio/custom-shop-php-sdk/pull/13))
 - Fix "Uncaught Error: Class 'Doctrine\\Common\\Annotations\\AnnotationRegistry' not found"
 
 ## v3.0.0 (22. Mar 2022)
