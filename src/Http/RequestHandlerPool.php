@@ -68,6 +68,7 @@ class RequestHandlerPool
             return Response::unauthorized('Unautorisiert');
         }
 
+        /** @var array<string, string> $arguments */
         if (!isset($arguments['Action'])) {
             return Response::badRequest('Keine Aktion übergeben.');
         }

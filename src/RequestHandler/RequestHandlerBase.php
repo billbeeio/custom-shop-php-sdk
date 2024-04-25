@@ -25,6 +25,7 @@ abstract class RequestHandlerBase implements RequestHandlerInterface
     {
         $requestBody = (string)$request->getBody();
         parse_str($requestBody, $deserializedBody);
+        /** @var array<string, mixed> $deserializedBody */
         return $deserializedBody;
     }
 

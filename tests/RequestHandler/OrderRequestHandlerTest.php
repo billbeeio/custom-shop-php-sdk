@@ -55,6 +55,7 @@ class OrderRequestHandlerTest extends TestCase
 
         parse_str($uri->getQuery(), $arguments);
 
+        /** @var array<string, string> $arguments */
         $response = $handler->handle($req, $arguments);
         /** @var array{"paging": array{"page": int, "totalPages": int, "totalCount": int}} $data */
         $data = json_decode((string)$response->getBody(), true);
